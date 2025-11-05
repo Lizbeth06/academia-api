@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -21,10 +22,10 @@ public class Validacioninscripcion {
     private Integer idValidacioninscripcion;
 
     @Column(nullable = false)
-    private LocalDate fvalidacion;
+    private LocalDateTime fvalidacion;
 
     @Column(nullable = false)
-    private LocalDate fmodificacion;
+    private LocalDateTime fmodificacion;
 
     @ManyToOne
     @JoinColumn(name = "id_inscripcion",foreignKey = @ForeignKey(name = "FK_VALIDACIONINSCRIPCION_INSCRIPCION"))

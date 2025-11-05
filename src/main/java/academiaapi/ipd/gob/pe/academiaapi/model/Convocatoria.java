@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -30,16 +31,16 @@ public class Convocatoria {
     private String descripcion;
 
     @Column(nullable = false)
-    private LocalDate fechainicioinscripcion;
+    private LocalDateTime finicioinscripcion;
 
     @Column(nullable = false)
-    private LocalDate fechafinalinscripcion;
+    private LocalDateTime ffinalinscripcion;
 
     @Column(nullable = false)
-    private LocalDate fechainicioactividad;
+    private LocalDateTime finicioactividad;
 
     @Column(nullable = false)
-    private LocalDate fechafinactividad;
+    private LocalDateTime ffinactividad;
 
     @Column(nullable = false)
     private Integer numvacantes;
@@ -48,10 +49,10 @@ public class Convocatoria {
     private Integer numinscritos;
 
     @Column(nullable = false)
-    private LocalDate fcreada;
+    private LocalDateTime fcreada;
 
     @Column(nullable = false)
-    private Boolean estado;
+    private Integer estado;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_USUARIO"))

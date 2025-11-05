@@ -41,7 +41,7 @@ public class Campeonato {
 
     @ManyToOne
     @JoinColumn(name = "id_involucrado",foreignKey = @ForeignKey(name = "FK_CAMPEONATO_INVOLUCRADO"))
-    private Involucrado invollucrado;
+    private Involucrado involucrado;
 
     @ManyToOne
     @JoinColumn(name = "id_evento",foreignKey = @ForeignKey(name = "FK_CAMPEONATO_EVENTO"))
