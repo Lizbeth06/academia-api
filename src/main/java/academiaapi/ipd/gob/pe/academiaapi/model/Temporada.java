@@ -40,5 +40,5 @@ public class Temporada {
 
     @ManyToOne
     @JoinColumn(name = "id_año",foreignKey = @ForeignKey(name = "FK_TEMPORADA_AÑO"))
-    private Año año;
+    private Ano año;
 }
