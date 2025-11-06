@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -21,24 +22,24 @@ public class Temporada {
     private Integer idTemporada;
 
     @Column(nullable = false)
-    private LocalDate faperturainscripcion;
+    private LocalDateTime faperturainscripcion;
 
     @Column(nullable = false)
-    private LocalDate finicioclases;
+    private LocalDateTime finicioclases;
 
     @Column(nullable = false)
-    private LocalDate fcierreclases;
+    private LocalDateTime fcierreclases;
 
     @Column(nullable = false)
-    private LocalDate fcierreinscripcion;
+    private LocalDateTime fcierreinscripcion;
 
     @Column(nullable = false)
-    private LocalDate fregistro;
+    private LocalDateTime fregistro;
 
     @Column(nullable = false)
     private Boolean estado;
 
     @ManyToOne
-    @JoinColumn(name = "id_año",foreignKey = @ForeignKey(name = "FK_TEMPORADA_AÑO"))
-    private Ano año;
+    @JoinColumn(name = "id_ano",foreignKey = @ForeignKey(name = "FK_TEMPORADA_ANO"))
+    private Ano ano;
 }
