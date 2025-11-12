@@ -50,9 +50,6 @@ public class Trabajador{
 
     private Double bonificaciones;
 
-    private String linkedin;
-
-    private String urlFoto;
 
 
     @ManyToOne

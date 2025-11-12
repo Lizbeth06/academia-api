@@ -27,14 +27,7 @@ public class UsuarioServiceImpl extends CRUDImpl<Usuario,Integer> implements IUs
                 .orElse(null);
     }
 
-    @Transactional
-    public void actualizarFoto(Integer idUsuario, String urlFoto) {
-        Usuario usuario = usuarioRepository.findById(idUsuario)
-                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
-        usuario.setUrlFoto(urlFoto);
-        usuarioRepository.save(usuario);
-    }
 
 
 

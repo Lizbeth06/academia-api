@@ -68,11 +68,6 @@ public class UsuarioController {
         return ResponseEntity.ok(mapperUtil.map(obj, UsuarioDTO.class));
     }
 
-    @PutMapping("/{id}/foto")
-    @Operation(summary = "Actualiza la foto de perfil del usuario (URL de imagen)")
-    public ResponseEntity<Void> actualizarFoto(@PathVariable("id") Integer id, @RequestBody String urlFoto) {
-        usuarioService.actualizarFoto(id, urlFoto);
-        return ResponseEntity.ok().build();
-    }
+
 
 }

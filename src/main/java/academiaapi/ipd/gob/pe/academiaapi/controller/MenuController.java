@@ -61,4 +61,13 @@ public class MenuController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Lista menu segun rol y usuario")
+    @GetMapping("/allusuariorol")
+    public ResponseEntity<List<MenuDTO>> getMenuByidRolidUsuario(
+            @RequestParam Integer id_rol,
+            @RequestParam Integer id_usuario)  {
+        List<MenuDTO> list = mapperUtil.mapList(menuService.getMenuByRolUsername(id_rol, id_usuario),MenuDTO.class);
+        return ResponseEntity.ok(list);
+    }
+
 }

@@ -43,9 +43,7 @@ public class Usuario {
 
     private Integer termino2;
 
-    @Column(nullable = true, length = 10000)  // Esto define el tamaño máximo en la base de datos
-    @Size(max = 10000, message = "La descripción no puede tener más de 1000 caracteres")
-    private String urlFoto;
+
 
     @ManyToOne
     @JoinColumn(name = "id_trabajador",foreignKey = @ForeignKey(name = "FK_USUARIO_TRABAJADOR"))

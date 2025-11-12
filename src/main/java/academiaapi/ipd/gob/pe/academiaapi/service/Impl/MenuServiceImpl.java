@@ -7,6 +7,8 @@ import academiaapi.ipd.gob.pe.academiaapi.service.IMenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MenuServiceImpl extends CRUDImpl<Menu,Integer> implements IMenuService {
@@ -15,4 +17,9 @@ public class MenuServiceImpl extends CRUDImpl<Menu,Integer> implements IMenuServ
 
     @Override
     protected IGenericRepo<Menu,Integer> getRepo() {return menuRepository;}
+
+    @Override
+    public List<Menu> getMenuByRolUsername(Integer id_rol, Integer id_usuario){
+        return menuRepository.getMenuByRolUsername(id_rol,id_usuario);
+    }
 }

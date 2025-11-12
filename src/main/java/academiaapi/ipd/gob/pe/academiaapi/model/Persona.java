@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,6 +45,10 @@ public class Persona {
     private String urllinkeding;
 
     private LocalDate fNacimiento;
+
+    @Column(nullable = true, length = 10000)  // Esto define el tamaño máximo en la base de datos
+    @Size(max = 10000, message = "La descripción no puede tener más de 1000 caracteres")
+    private String urlFoto;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_documento",foreignKey = @ForeignKey(name = "FK_PERSONA_TIPODOCUMENTO"))

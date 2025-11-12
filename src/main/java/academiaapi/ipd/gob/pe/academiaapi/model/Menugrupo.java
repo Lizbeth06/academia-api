@@ -11,23 +11,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tbl_menu")
-public class Menu {
+@Table(name = "tbl_menugrupo")
+public class Menugrupo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @EqualsAndHashCode.Include
-    private Integer idMenu;
+    private Integer idMenugrupo;
 
     @Column(nullable = false)
+    private String descripcion;
+
+    private String titulo;
+
+    private Integer lugarmenu;//1: al deslizar sesion 2: vertical
+    private Integer estado;
+
     private String icono;
 
-    @Column(nullable = false)
-    private String nombreMenu;
-
-    @Column(nullable = false)
-    private String urlMenu;
-
-    @ManyToOne
-    @JoinColumn(name = "id_menugrupo",foreignKey = @ForeignKey(name = "FK_MENU_MENUGRUPO"))
-    private Menugrupo menugrupo;
 }

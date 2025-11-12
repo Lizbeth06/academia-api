@@ -1,5 +1,6 @@
 package academiaapi.ipd.gob.pe.academiaapi.dto;
 
+import academiaapi.ipd.gob.pe.academiaapi.model.Menugrupo;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,4 +20,6 @@ public class MenuDTO {
 
     @NotNull
     private String urlMenu;
+
+    private Menugrupo menugrupo;
 }

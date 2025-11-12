@@ -45,9 +45,6 @@ public class TrabajadorDTO {
 
     private Double bonificaciones;
 
-    private String linkedin;
-
-    private String urlFoto;
  
 
     //Relaciones

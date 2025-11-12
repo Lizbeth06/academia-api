@@ -19,25 +19,19 @@ VALUES ('01', 'DNI'),
        ('11', 'OTROS');
 
 INSERT INTO tbl_tipooficina (descripcion)
-VALUES ('ENCARGADA DE GENERAR RECURSOS'),
-       ('OFICINA DE ADMINISTRACIÓN GENERAL'),
-       ('OFICINA DE CONTABILIDAD Y FINANZAS'),
-       ('DEPARTAMENTO DE RECURSOS HUMANOS'),
-       ('OFICINA DE VENTAS Y COMERCIALIZACIÓN'),
-       ('OFICINA DE SOPORTE TÉCNICO'),
-       ('ÁREA DE DESARROLLO DE SOFTWARE'),
-       ('OFICINA DE PLANIFICACIÓN ESTRATÉGICA'),
-       ('DEPARTAMENTO DE LOGÍSTICA Y DISTRIBUCIÓN'),
-       ('OFICINA DE ATENCIÓN AL CLIENTE'),
-       ('ÁREA DE MARKETING Y PUBLICIDAD');
+VALUES ('DIRECCIÓN  NACIONAL DE RECREACIÓN Y PROMOCIÓN DEL DEPORTE'),
+       ('DIRECCIÓN NACIONAL DE DEPORTE AFILIADO'),
+       ('DIRECCIÓN NACIONAL DE CAPACITACIÓN Y TÉCNICA DEPORTIVA'),
+       ('DIRECCIÓN NACIONAL DE SERVICIOS BIOMEDICOS');
 
 INSERT INTO tbl_oficina (descripcion, id_tipo_oficina)
-VALUES ('GERENCIA GENERAL', 1),
-       ('ADMINISTRACIÓN CENTRAL', 2),
-       ('CONTABILIDAD Y PRESUPUESTO', 3),
-       ('RECURSOS HUMANOS Y TALENTO', 4),
-       ('COMERCIALIZACIÓN Y VENTAS', 5),
-       ('SOPORTE TÉCNICO EMPRESARIAL', 6);
+VALUES ('SUBDIRECCIÓN DE DEPORTE DE RECREACIÓN DEL DEPORTE', 1),
+       ('SUBDIRECCIÓN DE DEPORTE PARA TODOS', 1),
+       ('SUBDIRECCIÓN DE MÉTODOS TÉCNICOS Y CAPACITACIÓN', 3),
+       ('SUBDIRECCIÓN DE REGISTRO NACIONAL DEL DEPORTE', 3);
+
+INSERT INTO tbl_institucion (num_documento,razon_social,nombre_comercial,telefono,correo,igv,direccion,url_logo,usuario_sol,clave_sol,id_tipo_documento,id_ubigeo)
+VALUES ('20135897044','INSTITUTO PERUANO DEL DEPORTE','ACADEMINIA IPD','+51 1 2048420','ipd@gmail.com',18,'Cal. Madre de Dios Nro. 463 (Tribuna Sur - Estadio Nacional)','https://res.cloudinary.com/dpumt2sth/image/upload/v1760922675/logo_academia_1_flddol.png','','',3,NULL)
 
 INSERT INTO tbl_ubigeo (ubi_pais, ubi_dpto, ubi_provincia, ubi_distrito, ubi_nombre, ubi_poblacion,
                                 ubi_superficie, ubi_latitud, ubi_longitud, ubi_estado)
@@ -2418,55 +2412,105 @@ VALUES ('01', '15', '10', '11', 'COLONIA', 0, '', '', '', 1),
        ('01', '16', '08', '00', 'PUTUMAYO', 0, '', '', '', 1);
 
 INSERT INTO tbl_persona (amaterno, apaterno, correo, direccion, f_nacimiento, genero, nombres, num_documento,
-                                 telefono, id_tipo_documento, id_ubigeo)
-VALUES ('ÑAUPARI', 'HUARANCCA', 'YONNY.HUARANCCA@UNSCH.EDU.PE', NULL, NULL, 1, 'YONNY', '47338697', '900696971', 1, 145),
-       ('SÁNCHEZ', 'GÓMEZ', 'CARLOSGOMEZ@GMAIL.COM', NULL, NULL, 1, 'CARLOS', '45678912', '987654321', 2, 2),
-       ('FERNÁNDEZ', 'LÓPEZ', 'MARIALOPEZ@GMAIL.COM', NULL, NULL, 0, 'MARÍA', '87451236', '912345678', 1, 679),
-       ('TORRES', 'MARTÍNEZ', 'JUANMARTINEZ@GMAIL.COM', NULL, NULL, 1, 'JUAN', '74185296', '956784231', 2, 4),
-       ('GUTIÉRREZ', 'ROJAS', 'ANDRESAROJAS@GMAIL.COM', NULL, NULL, 1, 'ANDRÉS', '32568974', '943217856', 1, 5),
-       ('MENDOZA', 'CASTRO', 'PAULACASTRO@GMAIL.COM', NULL, NULL, 0, 'PAULA', '96587412', '934561278', 2, 6),
-       ('ORÉ', 'CAMPOS', 'CAMPOSORE@GMAIL.COM', NULL, NULL, 1, 'JOSÉ LUIS', '20250000', '951515150',1, 6);
+                                 telefono, id_tipo_documento, id_ubigeo,urllinkeding,url_foto)
+VALUES ('ÑAUPARI', 'HUARANCCA', 'YONNY.HUARANCCA@UNSCH.EDU.PE', NULL, NULL, 1, 'YONNY', '47338697', '900696971', 1, 145,'',''),
+       ('SÁNCHEZ', 'GÓMEZ', 'CARLOSGOMEZ@GMAIL.COM', NULL, NULL, 1, 'CARLOS', '45678912', '987654321', 2, 2,'',''),
+       ('FERNÁNDEZ', 'LÓPEZ', 'MARIALOPEZ@GMAIL.COM', NULL, NULL, 0, 'MARÍA', '87451236', '912345678', 1, 679,'',''),
+       ('TORRES', 'MARTÍNEZ', 'JUANMARTINEZ@GMAIL.COM', NULL, NULL, 1, 'JUAN', '74185296', '956784231', 2, 4,'',''),
+       ('GUTIÉRREZ', 'ROJAS', 'ANDRESAROJAS@GMAIL.COM', NULL, NULL, 1, 'ANDRÉS', '32568974', '943217856', 1, 5,'',''),
+       ('MENDOZA', 'CASTRO', 'PAULACASTRO@GMAIL.COM', NULL, NULL, 0, 'PAULA', '96587412', '934561278', 2, 6,'',''),
+       ('ORÉ', 'CAMPOS', 'CAMPOSORE@GMAIL.COM', NULL, NULL, 1, 'JOSÉ LUIS', '20250000', '951515150',1, 6,'','');
 
 
 INSERT INTO tbl_trabajador (bonificaciones, cargo, codigo_trabajador, fingreso, fsalida, horariotrabajo,
-                                    linkedin, metas, observaciones, salario, tipocontrato, id_nivel_educacion, id_oficina,
+                                     metas, observaciones, salario, tipocontrato, id_nivel_educacion, id_oficina,
                                     id_persona)
-VALUES (6000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','','NINGUNO',6000,'CAS',1,1,1),
-       (4000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','','NINGUNO',4000,'CAS',1,1,2),
-       (5000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','','NINGUNO',5000,'CAS',1,1,3);
+VALUES (6000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','NINGUNO',6000,'CAS',1,1,1),
+       (4000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','NINGUNO',4000,'CAS',1,1,2),
+       (5000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','NINGUNO',5000,'CAS',1,1,3);
 
 
 
 INSERT INTO tbl_usuario
-(f_registro, is_active, password, termino1, termino2, url_foto, username, usernombres, id_trabajador)
-VALUES ('2025-02-21 17:47:07', 1, '$2a$10$0054p1l6ndMKN04Nm8ijb.rYcCFgwor/LP9CV.u7kriFfOgGjJlIm', 1, 1, '',
+(f_registro, is_active, password, termino1, termino2, username, usernombres, id_trabajador)
+VALUES ('2025-02-21 17:47:07', 1, '$2a$10$0054p1l6ndMKN04Nm8ijb.rYcCFgwor/LP9CV.u7kriFfOgGjJlIm', 1, 1,
         '47338697', 'YONNY HUARANCCA ÑAUPARI', 1),
-       ('2025-02-21 17:47:07', 1, '$2a$10$0054p1l6ndMKN04Nm8ijb.rYcCFgwor/LP9CV.u7kriFfOgGjJlIm', 1, 1, '',
+       ('2025-02-21 17:47:07', 1, '$2a$10$0054p1l6ndMKN04Nm8ijb.rYcCFgwor/LP9CV.u7kriFfOgGjJlIm', 1, 1,
         '76870978', 'LIZBETH INFANTE LEVA', 1),
-       ('2025-01-16 17:47:07', 1, '$2a$12$5rZ9Vlnvgin6ZPpO6Bn.YeKvcjkXYHn6BYleXnorTg4BuSjah4Pyy', 1, 2, NULL,
+       ('2025-01-16 17:47:07', 1, '$2a$12$5rZ9Vlnvgin6ZPpO6Bn.YeKvcjkXYHn6BYleXnorTg4BuSjah4Pyy', 1, 2,
         '20250000', 'JOSE LUIS ORÉ CAMPOS', 1);
 
 
+INSERT INTO tbl_menugrupo (descripcion, titulo, lugarmenu, estado, icono)
+VALUES ('Gestión de Usuario', 'Usuario', 1, 1, 'person'),
+       ('Gestión de Inscripción', 'Inscripción', 2, 1, 'sell'),
+       ('Registro Nacional de Talentos Deportivos', 'RNTD', 2, 1, 'inventory'),
+       ('Gestión de Asistencia', 'Asistencia', 2, 1, 'assignment'),
+       ('Gestión de Reporte', 'Reporte', 2, 1, 'campaign');
 
 -- Agregar más menús
-INSERT INTO tbl_menu
-(icono, nombre_menu, url_menu)
-VALUES ('home', 'principal', '/admin'),
-       ('home', 'trabajador', '/admin/trabajador');
+INSERT INTO tbl_menu (icono, nombre_menu, url_menu, id_menugrupo)
+VALUES ('person', 'Perfil', '/admin/usuario/perfil', 1),
+       ('store', 'Institución', '/admin/usuario/institucion', 1),
+       ('storefront', 'Trabajadores', '/admin/usuario/trabajador', 1),
+       ('account_circle', 'Cuentas', '/admin/usuario/usuario', 1),
+       ('help', 'Ayuda', '/admin/usuario/ayuda', 1),
+
+       ('VI', 'Validación de inscripción', '/admin/inscripcion/validacioninscripcion', 2),
+       ('ID', 'Inscripcion directa', '/admin/inscripcion/pre-inscripcion', 2),
+       ('Co', 'Convocatorias', '/admin/inscripcion/convocatoria', 2),
+       ('Hr', 'Horarios', '/admin/inscripcion/horarios', 2),
+       ('Tu', 'Turnos', '/admin/inscripcion/turnos', 2),
+       ('Se', 'Sedes', '/admin/inscripcion/sedes', 2),
+       ('Di', 'Disciplinas', '/admin/inscripcion/disciplina', 2),
+       ('Te', 'Temporada', '/admin/inscripcion/temporada', 2),
+
+       ('DT', 'Detección de talentos', '/admin/registro/detecciontalentos-lista', 3),
+       ('LT', 'Listado de talentos', '/admin/registro/listadotalentos-lista', 3),
+       ('ER', 'Evaluación del rendimiento deportivo', '/admin/registro/evaluacionrendimiento-lista', 3),
+
+       ('PA', 'Pasar Asistencia', '/admin/asistencia/pasarasistencia-lista', 4),
+       ('LA', 'Lista de Asistencia', '/admin/asistencia/listaasistencia-lista', 4),
+
+       ('bar_chart', 'Indicadores Físicos', '/admin/indacadores/indicadorfisico-lista', NULL),
+
+       ('Be', 'Beneficiarios', '/admin/reporte/beneficiarios-lista', 5),
+       ('In', 'Informes', '/admin/reporte/informes-lista', 5),
+       ('IH', 'Inscritos por horario', '/admin/reporte/inscritosporhoario-lista', 5);
 
 INSERT INTO tbl_rol
 (descripcion)
 VALUES ('ADMINISTRADOR'),
-       ('SECRETARIA'),
-       ('ESTUDIANTE');
+       ('COORDINADOR'),
+       ('DOCENTE');
 
-INSERT INTO tbl_usuariorol
-(id_rol, id_usuario)
-VALUES (1, 1),(1,3),(3, 2);
+INSERT INTO tbl_usuariorol (id_rol, id_usuario)
+VALUES (1, 1);
 
 
 -- Asignar menús a roles
-INSERT INTO tbl_menurol
-(id_menu, id_rol)
-VALUES (1, 1),
-       (2, 1);
+-- Asignar menús a roles
+INSERT INTO tbl_menurol (id_menu, id_rol)
+VALUES (1, 1),--administrador
+       (2, 1),
+       (3, 1),
+       (4, 1),
+       (5, 1),
+       (6, 1),
+       (7, 1),
+       (8, 1),
+       (9, 1),
+       (10, 1),
+       (11, 1),
+       (12, 1),
+       (13, 1),
+       (14, 1),
+       (15, 1),
+       (16, 1),
+       (17, 1),
+       (18, 1),
+       (19, 1),
+       (20, 1),
+       (21, 1),
+       (22, 1);
+

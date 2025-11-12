@@ -34,8 +34,7 @@ public class UsuarioDTO {
 
     private Integer termino2;
 
-    @Size(max = 10000, message = "La descripción no puede tener más de 10000 caracteres")
-    private String urlFoto;
+
 
     private TrabajadorDTO trabajador;
 
