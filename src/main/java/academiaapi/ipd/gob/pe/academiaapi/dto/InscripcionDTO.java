@@ -2,6 +2,7 @@ package academiaapi.ipd.gob.pe.academiaapi.dto;
 
 import academiaapi.ipd.gob.pe.academiaapi.model.Convocatoria;
 import academiaapi.ipd.gob.pe.academiaapi.model.Estado;
+import academiaapi.ipd.gob.pe.academiaapi.model.Tipoinscripcion;
 import academiaapi.ipd.gob.pe.academiaapi.model.Tiposeguro;
 import jakarta.persistence.Column;
 import jakarta.persistence.ForeignKey;
@@ -32,4 +33,6 @@ public class InscripcionDTO {
     private EstadoDTO estado;
 
     private TiposeguroDTO tiposeguro;
+
+    private TipoinscripcionDTO tipoinscripcion;
 }

@@ -37,4 +37,8 @@ public class Inscripcion {
     @ManyToOne
     @JoinColumn(name = "id_tiposeguro",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_TIPOSEGURO"))
     private Tiposeguro tiposeguro;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tipoinscripcion",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_TIPOINSCRIPCION"))
+    private Tipoinscripcion tipoinscripcion;
 }

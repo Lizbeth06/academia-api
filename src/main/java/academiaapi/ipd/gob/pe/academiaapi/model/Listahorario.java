@@ -13,21 +13,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tbl_listainscripcionhorario")
-public class Listainscripcionhorario {
+@Table(name = "tbl_listahorario")
+public class Listahorario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @EqualsAndHashCode.Include
-    private Integer idListainscripcionhorario;
+    private Integer idListahorario;
 
-    @Column(nullable = false)
-    private LocalDate fregistro;
 
     @ManyToOne
-    @JoinColumn(name = "id_inscripcion",foreignKey = @ForeignKey(name = "FK_LISTAINSCRIPCIONHORARIO_INSCRIPCION"))
-    private Inscripcion inscripcion;
+    @JoinColumn(name = "id_convocatoria",foreignKey = @ForeignKey(name = "FK_LISTAHORARIO_CONVOCATORIA"))
+    private Convocatoria convocatoria;
 
     @ManyToOne
-    @JoinColumn(name = "id_horario",foreignKey = @ForeignKey(name = "FK_LISTAINSCRIPCIONHORARIO_HORARIO"))
+    @JoinColumn(name = "id_horario",foreignKey = @ForeignKey(name = "FK_LISTAHORARIO_HORARIO"))
     private Horario horario;
 }
