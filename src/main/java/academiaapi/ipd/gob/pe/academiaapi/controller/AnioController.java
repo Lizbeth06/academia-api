@@ -1,7 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
-import academiaapi.ipd.gob.pe.academiaapi.dto.AnoDTO;
-import academiaapi.ipd.gob.pe.academiaapi.model.Ano;
+import academiaapi.ipd.gob.pe.academiaapi.dto.AnioDTO;
+import academiaapi.ipd.gob.pe.academiaapi.model.Anio;
 import academiaapi.ipd.gob.pe.academiaapi.service.IAnoService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
 import jakarta.validation.Valid;
@@ -17,34 +17,34 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/ano")
 @RequiredArgsConstructor
-public class AnoController {
+public class AnioController {
     private final IAnoService anoService;
     private final MapperUtil mapperUtil;
 
     @GetMapping
-    public ResponseEntity<List<AnoDTO>> findAll() {
-        List<AnoDTO> list = mapperUtil.mapList(anoService.findAll(), AnoDTO.class);
+    public ResponseEntity<List<AnioDTO>> findAll() {
+        List<AnioDTO> list = mapperUtil.mapList(anoService.findAll(), AnioDTO.class);
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnoDTO> findById(@PathVariable("id") Integer id) {
-        Ano obj = anoService.findById(id);
-        return ResponseEntity.ok(mapperUtil.map(obj, AnoDTO.class));
+    public ResponseEntity<AnioDTO> findById(@PathVariable("id") Integer id) {
+        Anio obj = anoService.findById(id);
+        return ResponseEntity.ok(mapperUtil.map(obj, AnioDTO.class));
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@Valid @RequestBody AnoDTO dto) {
-        Ano obj = anoService.save(mapperUtil.map(dto, Ano.class));
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdAno()).toUri();
+    public ResponseEntity<Void> save(@Valid @RequestBody AnioDTO dto) {
+        Anio obj = anoService.save(mapperUtil.map(dto, Anio.class));
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdAnio()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnoDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody AnoDTO dto) {
-        dto.setIdAno(id);
-        Ano obj = anoService.update(id, mapperUtil.map(dto, Ano.class));
-        return ResponseEntity.ok(mapperUtil.map(obj, AnoDTO.class));
+    public ResponseEntity<AnioDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody AnioDTO dto) {
+        dto.setIdAnio(id);
+        Anio obj = anoService.update(id, mapperUtil.map(dto, Anio.class));
+        return ResponseEntity.ok(mapperUtil.map(obj, AnioDTO.class));
     }
 
     @DeleteMapping("/{id}")

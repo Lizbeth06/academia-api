@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnoDTO {
-    private Integer idAno;
+public class AnioDTO {
+    private Integer idAnio;
 
     @NotBlank
     private String descripcion;

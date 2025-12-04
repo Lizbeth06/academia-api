@@ -24,6 +24,6 @@ public class DisciplinaDTO {
     private Boolean estado;
 
     @NotNull
-    private LocalDate fregistro;
+    private LocalDate fRegistro;
 }
 

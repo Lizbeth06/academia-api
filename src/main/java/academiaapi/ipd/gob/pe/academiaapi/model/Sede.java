@@ -1,6 +1,9 @@
 package academiaapi.ipd.gob.pe.academiaapi.model;
 
+import academiaapi.ipd.gob.pe.academiaapi.dto.SectorDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,23 +24,27 @@ public class Sede {
     private Integer idSede;
 
     @Column(nullable = false)
-    private String codigo;
+    private String nombre;
 
     @Column(nullable = false)
-    private String nombre;
+    private Integer codubi;
 
     @Column(nullable = false)
     private String direccion;
 
-    @Column(nullable = false)
     private Integer capacidad;
 
     @Column(nullable = false)
-    private Boolean estado;
+    private String ubicacion;
 
-    @ManyToOne
-    @JoinColumn(name = "id_ubigeo",foreignKey = @ForeignKey(name = "FK_SEDE_UBIGEO"))
-    private Ubigeo ubigeo;
+    @Column(nullable = false)
+    private Double latitud;
+
+    @Column(nullable = false)
+    private Double longitud;
+
+    @Column(nullable = false)
+    private Integer estado;
 
     @ManyToOne
     @JoinColumn(name = "id_sector",foreignKey = @ForeignKey(name = "FK_SEDE_SECTOR"))

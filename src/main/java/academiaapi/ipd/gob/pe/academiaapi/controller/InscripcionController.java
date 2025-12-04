@@ -4,6 +4,8 @@ import academiaapi.ipd.gob.pe.academiaapi.dto.InscripcionDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Inscripcion;
 import academiaapi.ipd.gob.pe.academiaapi.service.IInscripcionService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +19,26 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/inscripcion")
 @RequiredArgsConstructor
+@Tag(name = "tbl_inscripcion")
 public class InscripcionController {
     private final IInscripcionService inscripcionService;
     private final MapperUtil mapperUtil;
 
+    @Operation(summary = "Lista toda la inacripció")
     @GetMapping
     public ResponseEntity<List<InscripcionDTO>> findAll() {
         List<InscripcionDTO> list = mapperUtil.mapList(inscripcionService.findAll(), InscripcionDTO.class);
         return ResponseEntity.ok(list);
     }
 
+    @Operation(summary = "Lista una inscripción")
     @GetMapping("/{id}")
     public ResponseEntity<InscripcionDTO> findById(@PathVariable("id") Integer id) {
         Inscripcion obj = inscripcionService.findById(id);
         return ResponseEntity.ok(mapperUtil.map(obj, InscripcionDTO.class));
     }
 
+    @Operation(summary = "Guarda la inscripción")
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody InscripcionDTO dto) {
         Inscripcion obj = inscripcionService.save(mapperUtil.map(dto, Inscripcion.class));
@@ -40,6 +46,7 @@ public class InscripcionController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "Actuliza la inscripción")
     @PutMapping("/{id}")
     public ResponseEntity<InscripcionDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody InscripcionDTO dto) {
         dto.setIdInscripcion(id);
@@ -47,6 +54,7 @@ public class InscripcionController {
         return ResponseEntity.ok(mapperUtil.map(obj, InscripcionDTO.class));
     }
 
+    @Operation(summary = "Elimina un inscripción")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         inscripcionService.delete(id);

@@ -31,5 +31,5 @@ public class TemporadaDTO {
     @NotNull
     private Boolean estado;
 
-    private AnoDTO ano;
+    private AnioDTO anio;
 }

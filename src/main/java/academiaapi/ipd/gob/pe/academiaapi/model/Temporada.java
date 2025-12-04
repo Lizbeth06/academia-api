@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -40,6 +39,6 @@ public class Temporada {
     private Boolean estado;
 
     @ManyToOne
-    @JoinColumn(name = "id_ano",foreignKey = @ForeignKey(name = "FK_TEMPORADA_ANO"))
-    private Ano ano;
+    @JoinColumn(name = "id_anio",foreignKey = @ForeignKey(name = "FK_TEMPORADA_ANIO"))
+    private Anio anio;
 }

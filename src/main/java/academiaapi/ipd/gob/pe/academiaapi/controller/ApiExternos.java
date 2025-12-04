@@ -82,7 +82,7 @@ public class ApiExternos {
         try {
             Object response = restTemplate.getForObject(url, Object.class);
             return ResponseEntity.ok(response);
-         } catch (Exception e) {
+             } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
             error.put("mensaje", "Error consultando provincia");
             error.put("detalle", e.getMessage());

@@ -30,5 +30,5 @@ public class Disciplina {
     private Boolean estado;
 
     @Column(nullable = false)
-    private LocalDate fregistro;
+    private LocalDate fRegistro;
 }

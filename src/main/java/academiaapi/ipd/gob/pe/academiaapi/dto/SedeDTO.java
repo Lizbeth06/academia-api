@@ -13,21 +13,27 @@ public class SedeDTO {
     private Integer idSede;
 
     @NotBlank
-    private String codigo;
+    private String nombre;
 
     @NotBlank
-    private String nombre;
+    private Integer codubi;
 
     @NotBlank
     private String direccion;
 
-    @NotNull
     private Integer capacidad;
 
     @NotNull
-    private Boolean estado;
+    private String ubicacion;
 
-    private UbigeoDTO ubigeo;
+    @NotNull
+    private Double latitud;
+
+    @NotNull
+    private Double longitud;
+    
+    @NotNull
+    private Integer estado;
 
     private SectorDTO sector;
 }
