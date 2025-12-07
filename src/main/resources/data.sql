@@ -2535,6 +2535,21 @@ INSERT INTO tbl_anio VALUES
 ('2030'),
 ('2031');
 
+INSERT INTO tbl_criterioparticipacion VALUES
+('DEPORTE'),
+('PARADEPORTE');
+
+INSERT INTO tbl_tipoturno (abreviatura,descripcion) VALUES
+('M','MAÑANA'),
+('T','TARDE'),
+('N','NOCHE');
+
+INSERT INTO tbl_tipoinvolucrado(descripcion,parentesco) VALUES
+('HIJO(A)',2),('PAPÁ',1),('MAMÁ',1),('HERMANO(A)',0),('ABUELO(A)',1),('TÍO(A)',1),('SOBRINO(A)',2),('NIETO(A)',1),('PRIMO(A)',0),('OTRO',0);
+
+INSERT INTO tbl_tiposeguro VALUES
+('SIS (SEGURO INTEGRAL DE SALUD)'), ('ESSALUD'),('PRIVADO'), ('OTROS');
+
 INSERT INTO tbl_sede (nombre, direccion, latitud, longitud, codubi, ubicacion,capacidad, id_sector,estado) VALUES
 ('COLISEO CERRADO FLORENTINO ORDINOLA', 'Jr. Union S/N - Chachapoyas', -6.2299511, -77.8716744, 221, 'AMAZONAS/CHACHAPOYAS/CHACHAPOYAS',0,1,1),
 ('COMPLEJO DEPORTIVO KUELAP', 'Jirón Junin - Chachapoyas', -6.2314922, -77.8702931, 221, 'AMAZONAS/CHACHAPOYAS/CHACHAPOYAS',0,1,1),

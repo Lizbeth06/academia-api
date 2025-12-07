@@ -14,6 +14,8 @@ public class TemporadaDTO {
     private Integer idTemporada;
 
     @NotNull
+    private String descripcion;
+    @NotNull
     private LocalDateTime faperturainscripcion;
 
     @NotNull
@@ -29,7 +31,7 @@ public class TemporadaDTO {
     private LocalDateTime fregistro;
 
     @NotNull
-    private Boolean estado;
+    private String estado;
 
-    private AnioDTO anio;
+    private Integer idAnio;
 }

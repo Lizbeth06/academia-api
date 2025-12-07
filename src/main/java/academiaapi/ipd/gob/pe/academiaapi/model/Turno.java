@@ -1,5 +1,6 @@
 package academiaapi.ipd.gob.pe.academiaapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,10 @@ public class Turno {
     @Column(nullable = false)
     private LocalTime  horafin;
 
+    @Column(nullable = false)
+    private String estado;
+
     @ManyToOne
-    @JoinColumn(name = "id_horario",foreignKey = @ForeignKey(name = "FK_TURNO_HORARIO"))
-    private Horario horario;
+    @JoinColumn(name="id_tipoturno", foreignKey = @ForeignKey(name = "FK_TURNO_TIPOTURNO"))
+    private Tipoturno tipoturno;
 }

@@ -21,7 +21,6 @@ public class CategoriaedadDTO {
     @NotNull
     private Integer edadmaxima;
 
-    private CriterioparticipacionDTO criterioparticipacion;
-
-    private DisciplinaDTO disciplina;
+    //private CriterioparticipacionDTO criterioparticipacion;
+    private Integer idCriterioparticipacion;
 }

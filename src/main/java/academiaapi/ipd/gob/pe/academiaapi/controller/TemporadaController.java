@@ -4,6 +4,8 @@ import academiaapi.ipd.gob.pe.academiaapi.dto.TemporadaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Temporada;
 import academiaapi.ipd.gob.pe.academiaapi.service.ITemporadaService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +19,26 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/temporada")
 @RequiredArgsConstructor
+@Tag(name = "tbl_temporada")
 public class TemporadaController {
     private final ITemporadaService temporadaService;
     private final MapperUtil mapperUtil;
 
+    @Operation(summary = "Lista todas las temporadas")
     @GetMapping
     public ResponseEntity<List<TemporadaDTO>> findAll() {
         List<TemporadaDTO> list = mapperUtil.mapList(temporadaService.findAll(), TemporadaDTO.class);
         return ResponseEntity.ok(list);
     }
 
+    @Operation(summary = "Lista una temporada")
     @GetMapping("/{id}")
     public ResponseEntity<TemporadaDTO> findById(@PathVariable("id") Integer id) {
         Temporada obj = temporadaService.findById(id);
         return ResponseEntity.ok(mapperUtil.map(obj, TemporadaDTO.class));
     }
 
+    @Operation(summary = "Agrega una temporada")
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody TemporadaDTO dto) {
         Temporada obj = temporadaService.save(mapperUtil.map(dto, Temporada.class));
@@ -40,6 +46,7 @@ public class TemporadaController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "Actualiza una temporada")
     @PutMapping("/{id}")
     public ResponseEntity<TemporadaDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody TemporadaDTO dto) {
         dto.setIdTemporada(id);
@@ -47,6 +54,7 @@ public class TemporadaController {
         return ResponseEntity.ok(mapperUtil.map(obj, TemporadaDTO.class));
     }
 
+    @Operation(summary = "Elimina una temporada")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         temporadaService.delete(id);

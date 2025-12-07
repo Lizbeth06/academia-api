@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "tbl_horario")
 public class Horario {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @EqualsAndHashCode.Include
@@ -24,25 +27,35 @@ public class Horario {
     private Integer contador;
 
     @Column(nullable = false)
-    private Integer numvacante;
+    private Integer numVacante;
+
+    private String usuarioCrea;
+
+    private LocalDateTime fechaCrea;
+
+    private String usuarioModifica;
+
+    private LocalDateTime fechaModifica;
 
     @Column(nullable = false)
-    private Boolean estado;
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_turno",foreignKey = @ForeignKey(name = "FK_HORARIO_TURNO"))
     private Turno turno;
 
     @ManyToOne
-    @JoinColumn(name = "id_listadisciplina",foreignKey = @ForeignKey(name = "FK_HORARIO_LISTADISCIPLINA"))
+    @JoinColumn(name = "id_listadisciplina", foreignKey = @ForeignKey(name = "FK_HORARIO_LISTADISCIPLINA"))
     private Listadisciplina listadisciplina;
 
     @ManyToOne
-    @JoinColumn(name = "id_temporada",foreignKey = @ForeignKey(name = "FK_HORARIO_TEMPORADA"))
+    @JoinColumn(name = "id_temporada", foreignKey = @ForeignKey(name = "FK_HORARIO_TEMPORADA"))
     private Temporada temporada;
 
     @ManyToOne
-    @JoinColumn(name = "id_categoriaedad",foreignKey = @ForeignKey(name = "FK_THORARIO_CATEGORIEDADEDAD"))
-    private Tipoinvolucrado tipoinvolucrado;
+    @JoinColumn(name = "id_categoriaedad", foreignKey = @ForeignKey(name = "FK_HORARIO_CATEGORIA"))
+    private Categoriaedad categoriaEdad;
 
+    @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL)
+    private List<Listadia> listadia;
 }

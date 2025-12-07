@@ -11,16 +11,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tbl_tipoinvolucrado")
-public class Tipoinvolucrado {
+@Table(name = "tbl_listadia")
+
+public class Listadia {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @EqualsAndHashCode.Include
-    private Integer idTipoinvolucrado;
+    private Integer idListadia;
 
     @Column(nullable = false)
-    private String descripcion;
+    private  String estado;
 
-    @Column(nullable = false)
-    private Integer parentesco;//mostrar en 1:apoderados 2:estudiante 0:ambos
+    @ManyToOne
+    @JoinColumn(name = "id_horario",foreignKey = @ForeignKey(name = "FK_LISTADIA_HORARIO"))
+    private Horario horario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_dias",foreignKey = @ForeignKey(name = "FK_LISTADIA_DIAS"))
+    private Dias dias;
+
 }

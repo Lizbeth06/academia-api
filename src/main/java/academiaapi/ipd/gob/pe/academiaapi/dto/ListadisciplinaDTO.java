@@ -15,10 +15,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListadisciplinaDTO {
+
     private Integer idListadisciplina;
 
     @NotNull
-    private Boolean estado;
+    private String estado;
 
     private SedeDTO sede;
 

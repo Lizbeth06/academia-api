@@ -6,31 +6,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tbl_categoriaedad")
-public class Categoriaedad {
+@Table(name = "tbl_tipoturno")
+public class Tipoturno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @EqualsAndHashCode.Include
-    private Integer idCategoriaedad;
+    private Integer idTipoturno;
+
+    @Column(nullable = false)
+    private String abreviatura;
 
     @Column(nullable = false)
     private String descripcion;
-
-    @Column(nullable = false)
-    private Integer edadminima;
-
-    @Column(nullable = false)
-    private Integer edadmaxima;
-
-    @ManyToOne
-    @JoinColumn(name = "id_criterioparticipacion",foreignKey = @ForeignKey(name = "FK_CATEGORIAEDAD_CRITERIOPARTICIPACION"))
-    private Criterioparticipacion criterioparticipacion;
-
 }

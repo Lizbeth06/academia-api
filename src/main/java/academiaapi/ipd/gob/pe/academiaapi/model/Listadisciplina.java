@@ -21,7 +21,7 @@ public class Listadisciplina {
     private Integer idListadisciplina;
 
     @Column(nullable = false)
-    private Boolean estado;
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_sede",foreignKey = @ForeignKey(name = "FK_LISTADISCIPLINA_SEDE"))

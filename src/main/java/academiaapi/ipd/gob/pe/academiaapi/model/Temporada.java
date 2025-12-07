@@ -21,22 +21,25 @@ public class Temporada {
     private Integer idTemporada;
 
     @Column(nullable = false)
-    private LocalDateTime faperturainscripcion;
+    private String descripcion;
 
     @Column(nullable = false)
-    private LocalDateTime finicioclases;
+    private LocalDateTime fAperturainscripcion;
 
     @Column(nullable = false)
-    private LocalDateTime fcierreclases;
+    private LocalDateTime fInicioclases;
 
     @Column(nullable = false)
-    private LocalDateTime fcierreinscripcion;
+    private LocalDateTime fCierreclases;
 
     @Column(nullable = false)
-    private LocalDateTime fregistro;
+    private LocalDateTime fCierreinscripcion;
 
     @Column(nullable = false)
-    private Boolean estado;
+    private LocalDateTime fRegistro;
+
+    @Column(nullable = false)
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_anio",foreignKey = @ForeignKey(name = "FK_TEMPORADA_ANIO"))

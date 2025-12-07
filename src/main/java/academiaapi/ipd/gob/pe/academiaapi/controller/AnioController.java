@@ -2,7 +2,7 @@ package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.AnioDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Anio;
-import academiaapi.ipd.gob.pe.academiaapi.service.IAnoService;
+import academiaapi.ipd.gob.pe.academiaapi.service.IAnioService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/ano")
 @RequiredArgsConstructor
 public class AnioController {
-    private final IAnoService anoService;
+    private final IAnioService anoService;
     private final MapperUtil mapperUtil;
 
     @GetMapping

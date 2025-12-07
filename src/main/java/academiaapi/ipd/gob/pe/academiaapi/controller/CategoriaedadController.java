@@ -4,6 +4,8 @@ import academiaapi.ipd.gob.pe.academiaapi.dto.CategoriaedadDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Categoriaedad;
 import academiaapi.ipd.gob.pe.academiaapi.service.ICategoriaedadService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +19,26 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/categoriaedad")
 @RequiredArgsConstructor
+@Tag(name="tbl_categoriaedad")
 public class CategoriaedadController {
     private final ICategoriaedadService categoriaedadService;
     private final MapperUtil mapperUtil;
 
+    @Operation(summary = "Lista todas las categorias por edad")
     @GetMapping
     public ResponseEntity<List<CategoriaedadDTO>> findAll() {
         List<CategoriaedadDTO> list = mapperUtil.mapList(categoriaedadService.findAll(), CategoriaedadDTO.class);
         return ResponseEntity.ok(list);
     }
 
+    @Operation(summary = "Lista una categoria por edad")
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaedadDTO> findById(@PathVariable("id") Integer id) {
         Categoriaedad obj = categoriaedadService.findById(id);
         return ResponseEntity.ok(mapperUtil.map(obj, CategoriaedadDTO.class));
     }
 
+    @Operation(summary = "Crea una categoria por edad")
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody CategoriaedadDTO dto) {
         Categoriaedad obj = categoriaedadService.save(mapperUtil.map(dto, Categoriaedad.class));
@@ -40,6 +46,7 @@ public class CategoriaedadController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "Actualiza una categoria por edad")
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaedadDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody CategoriaedadDTO dto) {
         dto.setIdCategoriaedad(id);
@@ -47,6 +54,7 @@ public class CategoriaedadController {
         return ResponseEntity.ok(mapperUtil.map(obj, CategoriaedadDTO.class));
     }
 
+    @Operation(summary = "Elimina una categoria por edad")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         categoriaedadService.delete(id);
