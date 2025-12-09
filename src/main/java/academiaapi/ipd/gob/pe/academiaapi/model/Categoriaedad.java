@@ -29,6 +29,9 @@ public class Categoriaedad {
     @Column(nullable = false)
     private Integer edadmaxima;
 
+    @Column(nullable = false)
+    private String estado;
+
     @ManyToOne
     @JoinColumn(name = "id_criterioparticipacion",foreignKey = @ForeignKey(name = "FK_CATEGORIAEDAD_CRITERIOPARTICIPACION"))
     private Criterioparticipacion criterioparticipacion;

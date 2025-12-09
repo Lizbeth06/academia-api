@@ -2,10 +2,12 @@ package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.CategoriaedadDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Categoriaedad;
+import academiaapi.ipd.gob.pe.academiaapi.model.Temporada;
 import academiaapi.ipd.gob.pe.academiaapi.service.ICategoriaedadService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +59,12 @@ public class CategoriaedadController {
     @Operation(summary = "Elimina una categoria por edad")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        categoriaedadService.delete(id);
+        Categoriaedad categoriaedad = categoriaedadService.findById(id);
+        if(categoriaedad==null){
+            throw new EntityNotFoundException("Categoria no encontrado");
+        }
+        categoriaedad.setEstado("0");
+        categoriaedadService.save(categoriaedad);
         return ResponseEntity.noContent().build();
     }
 }

@@ -6,6 +6,7 @@ import academiaapi.ipd.gob.pe.academiaapi.service.ITurnoService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +58,12 @@ public class TurnoController {
     @Operation(summary = "Elimina un turno")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        turnoService.delete(id);
+        Turno turno = turnoService.findById(id);
+        if(turno==null){
+            throw new EntityNotFoundException("Turno no encontrado");
+        }
+        turno.setEstado("0");
+        turnoService.save(turno);
         return ResponseEntity.noContent().build();
     }
 }

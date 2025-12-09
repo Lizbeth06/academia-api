@@ -33,5 +33,5 @@ public class TemporadaDTO {
     @NotNull
     private String estado;
 
-    private Integer idAnio;
+    private AnioDTO anio;
 }

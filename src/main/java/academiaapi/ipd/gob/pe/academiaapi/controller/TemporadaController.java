@@ -2,10 +2,12 @@ package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.TemporadaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Temporada;
+import academiaapi.ipd.gob.pe.academiaapi.model.Turno;
 import academiaapi.ipd.gob.pe.academiaapi.service.ITemporadaService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +59,12 @@ public class TemporadaController {
     @Operation(summary = "Elimina una temporada")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        temporadaService.delete(id);
+        Temporada temporada = temporadaService.findById(id);
+        if(temporada==null){
+            throw new EntityNotFoundException("Temporada no encontrado");
+        }
+        temporada.setEstado("0");
+        temporadaService.save(temporada);
         return ResponseEntity.noContent().build();
     }
 }

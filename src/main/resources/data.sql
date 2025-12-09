@@ -2456,14 +2456,15 @@ VALUES ('person', 'Perfil', '/admin/usuario/perfil', 1),
        ('account_circle', 'Cuentas', '/admin/usuario/usuario', 1),
        ('help', 'Ayuda', '/admin/usuario/ayuda', 1),
 
-       ('VI', 'Validación de inscripción', '/admin/inscripcion/validacioninscripcion', 2),
-       ('ID', 'Inscripcion directa', '/admin/inscripcion/pre-inscripcion', 2),
        ('Co', 'Convocatorias', '/admin/inscripcion/convocatoria', 2),
-       ('Hr', 'Horarios', '/admin/inscripcion/horarios', 2),
-       ('Tu', 'Turnos', '/admin/inscripcion/turnos', 2),
-       ('Se', 'Sedes', '/admin/inscripcion/sedes', 2),
+       ('Ca', 'Categoria', '/admin/inscripcion/categoria', 2),
        ('Di', 'Disciplinas', '/admin/inscripcion/disciplina', 2),
+       ('Hr', 'Horarios', '/admin/inscripcion/horarios', 2),
+       ('ID', 'Inscripcion directa', '/admin/inscripcion/pre-inscripcion', 2),
+       ('Se', 'Sedes', '/admin/inscripcion/sedes', 2),
        ('Te', 'Temporada', '/admin/inscripcion/temporada', 2),
+       ('Tu', 'Turnos', '/admin/inscripcion/turnos', 2),
+       ('VI', 'Validación de inscripción', '/admin/inscripcion/validacioninscripcion', 2),
 
        ('DT', 'Detección de talentos', '/admin/registro/detecciontalentos-lista', 3),
        ('LT', 'Listado de talentos', '/admin/registro/listadotalentos-lista', 3),
@@ -2485,7 +2486,7 @@ VALUES ('ADMINISTRADOR'),
        ('DOCENTE');
 
 INSERT INTO tbl_usuariorol (id_rol, id_usuario)
-VALUES (1, 1);
+VALUES (1, 1),(1,3);
 
 
 -- Asignar menús a roles

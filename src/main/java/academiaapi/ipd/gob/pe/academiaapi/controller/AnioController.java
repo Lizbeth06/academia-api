@@ -15,27 +15,27 @@ import java.net.URI;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/ano")
+@RequestMapping("/api/anio")
 @RequiredArgsConstructor
 public class AnioController {
-    private final IAnioService anoService;
+    private final IAnioService anioService;
     private final MapperUtil mapperUtil;
 
     @GetMapping
     public ResponseEntity<List<AnioDTO>> findAll() {
-        List<AnioDTO> list = mapperUtil.mapList(anoService.findAll(), AnioDTO.class);
+        List<AnioDTO> list = mapperUtil.mapList(anioService.findAll(), AnioDTO.class);
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AnioDTO> findById(@PathVariable("id") Integer id) {
-        Anio obj = anoService.findById(id);
+        Anio obj = anioService.findById(id);
         return ResponseEntity.ok(mapperUtil.map(obj, AnioDTO.class));
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody AnioDTO dto) {
-        Anio obj = anoService.save(mapperUtil.map(dto, Anio.class));
+        Anio obj = anioService.save(mapperUtil.map(dto, Anio.class));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdAnio()).toUri();
         return ResponseEntity.created(location).build();
     }
@@ -43,13 +43,13 @@ public class AnioController {
     @PutMapping("/{id}")
     public ResponseEntity<AnioDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody AnioDTO dto) {
         dto.setIdAnio(id);
-        Anio obj = anoService.update(id, mapperUtil.map(dto, Anio.class));
+        Anio obj = anioService.update(id, mapperUtil.map(dto, Anio.class));
         return ResponseEntity.ok(mapperUtil.map(obj, AnioDTO.class));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        anoService.delete(id);
+        anioService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
