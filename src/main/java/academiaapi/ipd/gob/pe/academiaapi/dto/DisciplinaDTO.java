@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DisciplinaDTO {
+
     private Integer idDisciplina;
 
     @NotBlank
@@ -19,6 +20,12 @@ public class DisciplinaDTO {
 
     @NotBlank
     private String descripcion;
+
+    @NotBlank
+    private String edadDeporte;
+
+    @NotBlank
+    private String edadParadeporte;
 
     @NotNull
     private Boolean estado;

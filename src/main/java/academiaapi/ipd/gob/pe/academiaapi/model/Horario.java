@@ -44,7 +44,7 @@ public class Horario {
     @JoinColumn(name = "id_turno",foreignKey = @ForeignKey(name = "FK_HORARIO_TURNO"))
     private Turno turno;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "id_listadisciplina", foreignKey = @ForeignKey(name = "FK_HORARIO_LISTADISCIPLINA"))
     private Listadisciplina listadisciplina;
 
@@ -56,6 +56,8 @@ public class Horario {
     @JoinColumn(name = "id_categoriaedad", foreignKey = @ForeignKey(name = "FK_HORARIO_CATEGORIA"))
     private Categoriaedad categoriaEdad;
 
-    @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "horario", cascade = {CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
     private List<Listadia> listadia;
+
+    //orphanRemoval = true solo en @OneToMany o @OneToOne
 }

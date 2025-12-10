@@ -4,6 +4,7 @@ import academiaapi.ipd.gob.pe.academiaapi.model.Listadisciplina;
 import academiaapi.ipd.gob.pe.academiaapi.model.Temporada;
 import academiaapi.ipd.gob.pe.academiaapi.model.Tipoinvolucrado;
 import academiaapi.ipd.gob.pe.academiaapi.model.Turno;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
@@ -48,5 +49,6 @@ public class HorarioDTO {
 
     private CategoriaedadDTO categoriaedad;
 
+    @JsonManagedReference
     private List<ListadiaDTO> listadia;
 }

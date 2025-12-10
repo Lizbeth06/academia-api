@@ -22,6 +22,9 @@ public class CategoriaedadDTO {
     private Integer edadmaxima;
 
     @NotBlank
+    private String etapa;
+
+    @NotBlank
     private String estado;
 
     private CriterioparticipacionDTO criterioparticipacion;

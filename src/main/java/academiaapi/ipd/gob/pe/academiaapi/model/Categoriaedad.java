@@ -29,6 +29,9 @@ public class Categoriaedad {
     @Column(nullable = false)
     private Integer edadmaxima;
 
+    @Column(nullable=false)
+    private String etapa;//Formacion/Masificacion
+
     @Column(nullable = false)
     private String estado;
 

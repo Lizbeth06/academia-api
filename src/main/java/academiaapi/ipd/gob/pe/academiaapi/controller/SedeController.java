@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.SedeDTO;
+import academiaapi.ipd.gob.pe.academiaapi.dto.UbigeoDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Sede;
 import academiaapi.ipd.gob.pe.academiaapi.service.ISedeService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/sede")
@@ -59,5 +61,12 @@ public class SedeController {
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         sedeService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Lista sede por ubicacion")
+    @GetMapping("/ubicacion")
+    public ResponseEntity<List<SedeDTO>> getSedexubicacion(@RequestParam String ubicacion) {
+        List<SedeDTO> sedes = mapperUtil.mapList(sedeService.getSedes(ubicacion),SedeDTO.class) ;
+        return ResponseEntity.ok(sedes);
     }
 }

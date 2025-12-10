@@ -20,7 +20,6 @@ public class Listahorario {
     @EqualsAndHashCode.Include
     private Integer idListahorario;
 
-
     @ManyToOne
     @JoinColumn(name = "id_convocatoria",foreignKey = @ForeignKey(name = "FK_LISTAHORARIO_CONVOCATORIA"))
     private Convocatoria convocatoria;

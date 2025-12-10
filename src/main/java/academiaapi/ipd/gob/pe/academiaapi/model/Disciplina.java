@@ -27,8 +27,15 @@ public class Disciplina {
     private String descripcion;
 
     @Column(nullable = false)
-    private Boolean estado;
+    private String edadDeporte;
+
+    @Column(nullable = false)
+    private String edadParadeporte;
 
     @Column(nullable = false)
     private LocalDate fRegistro;
+
+    @Column(nullable = false)
+    private String estado;
+
 }
