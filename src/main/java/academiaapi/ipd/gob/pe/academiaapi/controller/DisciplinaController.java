@@ -4,6 +4,8 @@ import academiaapi.ipd.gob.pe.academiaapi.dto.DisciplinaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Disciplina;
 import academiaapi.ipd.gob.pe.academiaapi.service.IDisciplinaService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +19,26 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/disciplina")
 @RequiredArgsConstructor
+@Tag(name="tbl_disciplina")
 public class DisciplinaController {
     private final IDisciplinaService disciplinaService;
     private final MapperUtil mapperUtil;
 
+    @Operation(summary = "Lista todas las disciplinas")
     @GetMapping
     public ResponseEntity<List<DisciplinaDTO>> findAll() {
         List<DisciplinaDTO> list = mapperUtil.mapList(disciplinaService.findAll(), DisciplinaDTO.class);
         return ResponseEntity.ok(list);
     }
 
+    @Operation(summary = "Lista una disciplina")
     @GetMapping("/{id}")
     public ResponseEntity<DisciplinaDTO> findById(@PathVariable("id") Integer id) {
         Disciplina obj = disciplinaService.findById(id);
         return ResponseEntity.ok(mapperUtil.map(obj, DisciplinaDTO.class));
     }
 
+    @Operation(summary = "Crea una disciplina")
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody DisciplinaDTO dto) {
         Disciplina obj = disciplinaService.save(mapperUtil.map(dto, Disciplina.class));
@@ -40,6 +46,7 @@ public class DisciplinaController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "Actualiza una disciplina")
     @PutMapping("/{id}")
     public ResponseEntity<DisciplinaDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody DisciplinaDTO dto) {
         dto.setIdDisciplina(id);
@@ -47,6 +54,7 @@ public class DisciplinaController {
         return ResponseEntity.ok(mapperUtil.map(obj, DisciplinaDTO.class));
     }
 
+    @Operation(summary = "Elimina una disciplina")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         disciplinaService.delete(id);
