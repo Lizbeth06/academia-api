@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,4 +31,7 @@ public class TurnoDTO {
     private String estado;
 
     private TipoturnoDTO tipoturno;
+
+    @JsonManagedReference
+    private List<ListadiaDTO> listadia;
 }

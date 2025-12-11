@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -34,4 +35,8 @@ public class Turno {
     @ManyToOne
     @JoinColumn(name="id_tipoturno", foreignKey = @ForeignKey(name = "FK_TURNO_TIPOTURNO"))
     private Tipoturno tipoturno;
+
+    @OneToMany(mappedBy = "turno", cascade = {CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
+    private List<Listadia> listadia;
+    //orphanRemoval = true solo en @OneToMany o @OneToOne
 }

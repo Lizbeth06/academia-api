@@ -17,7 +17,7 @@ public class ListadiaDTO {
     private  String estado;
 
     @JsonBackReference
-    private HorarioDTO horario;
+    private TurnoDTO turno;
 
     private DiasDTO dias;
 }

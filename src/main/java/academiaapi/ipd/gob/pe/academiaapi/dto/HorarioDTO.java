@@ -48,7 +48,4 @@ public class HorarioDTO {
     private TemporadaDTO temporada;
 
     private CategoriaedadDTO categoriaedad;
-
-    @JsonManagedReference
-    private List<ListadiaDTO> listadia;
 }

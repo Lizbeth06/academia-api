@@ -24,8 +24,8 @@ public class Listadia {
     private  String estado;
 
     @ManyToOne
-    @JoinColumn(name = "id_horario",foreignKey = @ForeignKey(name = "FK_LISTADIA_HORARIO"))
-    private Horario horario;
+    @JoinColumn(name = "id_turno",foreignKey = @ForeignKey(name = "FK_LISTADIA_TURNO"))
+    private Turno turno;
 
     @ManyToOne
     @JoinColumn(name = "id_dias",foreignKey = @ForeignKey(name = "FK_LISTADIA_DIAS"))
