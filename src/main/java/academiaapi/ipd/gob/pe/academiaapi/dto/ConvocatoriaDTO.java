@@ -44,12 +44,14 @@ public class ConvocatoriaDTO {
     @NotNull
     private LocalDateTime fcreada;
 
+    private LocalDateTime fmodificada;
+
+    private String urlImagen;
+
     @NotNull
     private Integer estado;
 
-    private UsuarioDTO usuario;
+    private UsuarioDTO usuariocrea;
 
-    private OficinaDTO oficina;
-
-    private TipoinvolucradoDTO tipoinvolucrado;
+    private UsuarioDTO usuariomodifica;
 }

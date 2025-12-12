@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -40,7 +42,9 @@ public class ConvocatoriaController {
 
     @Operation(summary = "Crea una convocatoria")
     @PostMapping
-    public ResponseEntity<Void> save(@Valid @RequestBody ConvocatoriaDTO dto) {
+    public ResponseEntity<Void> save(@Valid @RequestBody ConvocatoriaDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println("USUARIO ACTUAL:" + userDetails.getUsername());
+
         Convocatoria obj = convocatoriaService.save(mapperUtil.map(dto, Convocatoria.class));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConvocatoria()).toUri();
         return ResponseEntity.created(location).build();

@@ -52,17 +52,19 @@ public class Convocatoria {
     private LocalDateTime fcreada;
 
     @Column(nullable = false)
+    private LocalDateTime fmodificada;
+
+    @Column
+    private String urlImagen;
+
+    @Column(nullable = false)
     private Integer estado;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_USUARIO"))
-    private Usuario usuario;
+    @JoinColumn(name = "usuario_crea",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_USUARIO"))
+    private Usuario usuariocrea;
 
     @ManyToOne
-    @JoinColumn(name = "id_oficina",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_OFICINA"))
-    private Oficina oficina;
-
-    @ManyToOne
-    @JoinColumn(name = "id_tipoconvocatoria",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_TIPOCONVOCATORIA"))
-    private Tipoinvolucrado tipoinvolucrado;
+    @JoinColumn(name = "usuario_modifica",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_USUARIO"))
+    private Usuario usuariomodifica;
 }
