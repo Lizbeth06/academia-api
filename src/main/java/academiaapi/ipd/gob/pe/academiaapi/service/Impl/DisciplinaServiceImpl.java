@@ -7,6 +7,8 @@ import academiaapi.ipd.gob.pe.academiaapi.service.IDisciplinaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DisciplinaServiceImpl extends CRUDImpl<Disciplina,Integer> implements IDisciplinaService {
@@ -16,5 +18,10 @@ public class DisciplinaServiceImpl extends CRUDImpl<Disciplina,Integer> implemen
     @Override
     protected IGenericRepo<Disciplina, Integer> getRepo() {
         return DisciplinaRepository;
+    }
+
+    @Override
+    public List<Disciplina> getDisciplinasxidsede(Integer idsede) {
+        return DisciplinaRepository.findDisciplinas(idsede);
     }
 }

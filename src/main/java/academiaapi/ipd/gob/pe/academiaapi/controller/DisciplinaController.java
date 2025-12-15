@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +25,19 @@ public class DisciplinaController {
     private final IDisciplinaService disciplinaService;
     private final MapperUtil mapperUtil;
 
+    @Operation(summary = "Lista disciplinas por sede")
+    @GetMapping("/disciplinaxsede/{idsede}")
+    public ResponseEntity<List<DisciplinaDTO>> getDisciplinasxsede(@PathVariable("idsede") Integer idsede) {
+        List<Disciplina> listadodisciplina=disciplinaService.getDisciplinasxidsede(idsede);
+        List<DisciplinaDTO> list = mapperUtil.mapList(listadodisciplina, DisciplinaDTO.class);
+        return ResponseEntity.ok(list);
+    }
+
     @Operation(summary = "Lista todas las disciplinas")
     @GetMapping
     public ResponseEntity<List<DisciplinaDTO>> findAll() {
-        List<DisciplinaDTO> list = mapperUtil.mapList(disciplinaService.findAll(), DisciplinaDTO.class);
+        List<Disciplina> listaxestado=disciplinaService.findAll().stream().filter(d->"1".equals(d.getEstado())).toList();
+        List<DisciplinaDTO> list = mapperUtil.mapList(listaxestado, DisciplinaDTO.class);
         return ResponseEntity.ok(list);
     }
 

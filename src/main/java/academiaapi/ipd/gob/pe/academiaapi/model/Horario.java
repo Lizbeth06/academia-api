@@ -40,7 +40,7 @@ public class Horario {
     @Column(nullable = false)
     private String estado;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne
     @JoinColumn(name = "id_turno",foreignKey = @ForeignKey(name = "FK_HORARIO_TURNO"))
     private Turno turno;
 
