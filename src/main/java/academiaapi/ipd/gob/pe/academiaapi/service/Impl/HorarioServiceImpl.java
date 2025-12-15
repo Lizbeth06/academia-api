@@ -8,14 +8,22 @@ import academiaapi.ipd.gob.pe.academiaapi.service.ITipodocumentoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class HorarioServiceImpl extends CRUDImpl<Horario,Integer> implements IHorarioService {
 
-    private final IHorarioRepository HorarioRepository;
+    private final IHorarioRepository horarioRepository;
 
     @Override
     protected IGenericRepo<Horario, Integer> getRepo() {
-        return HorarioRepository;
+        return horarioRepository;
+    }
+
+    @Override
+    public List<Horario> getHorarioxsede(Integer idSede) {
+        return horarioRepository.findAllHorarios(idSede);
     }
 }

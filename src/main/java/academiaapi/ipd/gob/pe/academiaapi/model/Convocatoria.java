@@ -30,41 +30,24 @@ public class Convocatoria {
     @Column(nullable = false)
     private String descripcion;
 
-    @Column(nullable = false)
-    private LocalDateTime finicioinscripcion;
+    @Column
+    private String urlImagen;
 
     @Column(nullable = false)
-    private LocalDateTime ffinalinscripcion;
+    private String estado;
 
     @Column(nullable = false)
-    private LocalDateTime finicioactividad;
-
-    @Column(nullable = false)
-    private LocalDateTime ffinactividad;
-
-    @Column(nullable = false)
-    private Integer numvacantes;
-
-    @Column(nullable = false)
-    private Integer numinscritos;
+    private String usuariocrea;
 
     @Column(nullable = false)
     private LocalDateTime fcreada;
 
     @Column(nullable = false)
-    private LocalDateTime fmodificada;
-
-    @Column
-    private String urlImagen;
+    private String usuariomodifica;
 
     @Column(nullable = false)
-    private Integer estado;
+    private LocalDateTime fmodificada;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_crea",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_USUARIO"))
-    private Usuario usuariocrea;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_modifica",foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_USUARIO"))
-    private Usuario usuariomodifica;
+
 }
