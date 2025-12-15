@@ -15,7 +15,7 @@ public class SedeDTO {
     @NotBlank
     private String nombre;
 
-    @NotBlank
+    @NotNull
     private Integer codubi;
 
     @NotBlank
