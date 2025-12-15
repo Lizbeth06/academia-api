@@ -1,0 +1,19 @@
+package academiaapi.ipd.gob.pe.academiaapi.service.Impl;
+
+import academiaapi.ipd.gob.pe.academiaapi.model.Participante;
+import academiaapi.ipd.gob.pe.academiaapi.repository.IGenericRepo;
+import academiaapi.ipd.gob.pe.academiaapi.repository.IParticipanteRepository;
+import academiaapi.ipd.gob.pe.academiaapi.service.IParticipanteService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class ParticipanteServiceImpl extends CRUDImpl<Participante,Integer> implements IParticipanteService {
+    private final IParticipanteRepository participanteRepository;
+
+    @Override
+    protected IGenericRepo<Participante, Integer> getRepo() {
+        return participanteRepository;
+    }
+}

@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AnioServiceImpl extends CRUDImpl<Anio,Integer> implements IAnioService {
-
     private final IAnioRepository AnioRepository;
 
     @Override
     protected IGenericRepo<Anio, Integer> getRepo() {
         return AnioRepository;
     }
+
 }
