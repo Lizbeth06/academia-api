@@ -25,4 +25,9 @@ public class SedeServiceImpl extends CRUDImpl<Sede,Integer> implements ISedeServ
     public List<Sede> getSedes(String ubicacion) {
         return sedeRepository.buscarPorUbicacion(ubicacion);
     }
+
+    @Override
+    public List<Sede> findByCodubi(Integer codubi){
+        return sedeRepository.findByCodubi(codubi);
+    }
 }

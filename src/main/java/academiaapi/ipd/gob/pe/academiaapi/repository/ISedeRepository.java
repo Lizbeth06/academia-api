@@ -12,4 +12,6 @@ public interface ISedeRepository extends IGenericRepo<Sede,Integer>{
 
     @Query("SELECT s FROM Sede s WHERE s.ubicacion LIKE %:ubicacion%")
     List<Sede> buscarPorUbicacion(@Param("ubicacion") String ubicacion);
+
+    List<Sede> findByCodubi(Integer codubi);
 }
