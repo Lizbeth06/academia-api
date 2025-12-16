@@ -2,7 +2,6 @@ package academiaapi.ipd.gob.pe.academiaapi.dto;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,18 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaedadDTO {
-    private Integer idCategoriaedad;
+public class NivelDTO {
+    private Integer idNivel;
+
+    @NotBlank
+    private String codigo;
 
     @NotBlank
     private String descripcion;
 
-    @NotNull
-    private Integer edadminima;
 
-    @NotNull
-    private Integer edadmaxima;
-
-    @NotBlank
-    private String estado;
 }
+

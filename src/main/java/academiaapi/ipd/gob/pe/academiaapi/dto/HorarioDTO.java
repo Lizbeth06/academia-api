@@ -30,13 +30,16 @@ public class HorarioDTO {
     @NotNull
     private Integer numVacante;
 
+    @NotNull
+    private Integer limitePreinscripcion;
+
     private String usuarioCrea;
 
-    private LocalDateTime fechaCrea;
+    private LocalDateTime fechaCreada;
 
     private String usuarioModifica;
 
-    private LocalDateTime fechaModifica;
+    private LocalDateTime fechaModificada;
 
     @NotNull
     private String estado;
@@ -47,5 +50,9 @@ public class HorarioDTO {
 
     private TemporadaDTO temporada;
 
+    private ModalidadDTO modalidad;
+
     private CategoriaedadDTO categoriaedad;
+
+    private NivelDTO nivel;
 }

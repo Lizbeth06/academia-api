@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.service.Impl;
 
 import academiaapi.ipd.gob.pe.academiaapi.model.Categoriaedad;
+import academiaapi.ipd.gob.pe.academiaapi.model.Nivel;
 import academiaapi.ipd.gob.pe.academiaapi.repository.ICategoriaedadRepository;
 import academiaapi.ipd.gob.pe.academiaapi.repository.IGenericRepo;
 import academiaapi.ipd.gob.pe.academiaapi.service.ICategoriaedadService;

@@ -36,18 +36,12 @@ public class Convocatoria {
     @Column(nullable = false)
     private String estado;
 
-    @Column(nullable = false)
+    private LocalDateTime fechacreada;
+
     private String usuariocrea;
 
-    @Column(nullable = false)
-    private LocalDateTime fcreada;
+    private LocalDateTime fechamodificada;
 
-    @Column(nullable = false)
     private String usuariomodifica;
-
-    @Column(nullable = false)
-    private LocalDateTime fmodificada;
-
-
 
 }

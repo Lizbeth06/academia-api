@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -29,13 +27,16 @@ public class Horario {
     @Column(nullable = false)
     private Integer numVacante;
 
-    private String usuarioCrea;
+    @Column(nullable = false)
+    private Integer limitePreinscripcion;
 
-    private LocalDateTime fechaCrea;
+    private String usuariocrea;
 
-    private String usuarioModifica;
+    private LocalDateTime fechacreada;
 
-    private LocalDateTime fechaModifica;
+    private String usuariomodifica;
+
+    private LocalDateTime fechamodificada;
 
     @Column(nullable = false)
     private String estado;
@@ -53,8 +54,15 @@ public class Horario {
     private Temporada temporada;
 
     @ManyToOne
+    @JoinColumn(name = "id_modalidad", foreignKey = @ForeignKey(name = "FK_HORARIO_MODALIDAD"))
+    private Modalidad modalidad ;
+
+    @ManyToOne
     @JoinColumn(name = "id_categoriaedad", foreignKey = @ForeignKey(name = "FK_HORARIO_CATEGORIA"))
     private Categoriaedad categoriaEdad;
 
+    @ManyToOne
+    @JoinColumn(name = "id_nivel", foreignKey = @ForeignKey(name = "FK_HORARIO_NIVEL"))
+    private Nivel nivel;
     //orphanRemoval = true solo en @OneToMany o @OneToOne
 }

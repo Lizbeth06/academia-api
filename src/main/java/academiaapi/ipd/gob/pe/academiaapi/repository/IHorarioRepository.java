@@ -22,4 +22,18 @@ public interface IHorarioRepository extends IGenericRepo<Horario, Integer> {
     List<Horario> findAllHorarios(
             @Param("idSede") Integer idSede
     );
+
+    @Query("""
+                SELECT h
+                FROM Horario h
+                JOIN h.listadisciplina l
+                WHERE l.disciplina.idDisciplina = :idDisciplina
+                  AND l.sede.idSede = :idSede
+                  AND h.estado = '1'
+                  AND l.estado = '1'
+            """)
+    List<Horario> findAllHorariosxidsedeiddisciplina(
+            @Param("idDisciplina") Integer idDisciplina,
+            @Param("idSede") Integer idSede
+    );
 }

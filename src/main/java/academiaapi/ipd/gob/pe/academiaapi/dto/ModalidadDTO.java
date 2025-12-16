@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CriterioparticipacionDTO {
-    private Integer idCriterioparticipacion;
+public class ModalidadDTO {
+    private Integer idModalidad;
 
     @NotBlank
     private String descripcion;
