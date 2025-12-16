@@ -23,35 +23,18 @@ public class ConvocatoriaDTO {
     @NotBlank
     private String descripcion;
 
-    @NotNull
-    private LocalDateTime finicioinscripcion;
+    private LocalDateTime fechacreada;
 
-    @NotNull
-    private LocalDateTime ffinalinscripcion;
+    private String usuariocrea;
 
-    @NotNull
-    private LocalDateTime finicioactividad;
+    private LocalDateTime fechamodificada;
 
-    @NotNull
-    private LocalDateTime ffinactividad;
-
-    @NotNull
-    private Integer numvacantes;
-
-    @NotNull
-    private Integer numinscritos;
-
-    @NotNull
-    private LocalDateTime fcreada;
-
-    private LocalDateTime fmodificada;
+    private String usuariomodifica;
 
     private String urlImagen;
 
     @NotNull
     private Integer estado;
 
-    private UsuarioDTO usuariocrea;
 
-    private UsuarioDTO usuariomodifica;
 }

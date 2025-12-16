@@ -16,6 +16,7 @@ import academiaapi.ipd.gob.pe.academiaapi.service.Impl.ColaGenericoServiceImpl;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -63,7 +65,7 @@ public class HorarioController {
     @Operation(summary = "Lista horarios por sede y agrupa por disciplina")
     @GetMapping("/listagrupada/{idSede}")
     public ResponseEntity<List<HorarioPorDisciplinaDTO>> findAllHorarioagrupado(@PathVariable Integer idSede) {
-        List<Horario> listHorarios=horarioService.getHorarioxsede(idSede);
+        List<Horario> listHorarios = horarioService.getHorarioxsede(idSede);
         Map<Disciplina, List<Horario>> grouped = listHorarios.stream()
                 .collect(Collectors.groupingBy(h -> h.getListadisciplina().getDisciplina()));
 
@@ -121,12 +123,12 @@ public class HorarioController {
                 .orElseThrow(() -> new RuntimeException("Disciplina no encontrada"));
 
         Listadisciplina listadisciplina = listadisciplinaRepository.findBySedeAndDisciplinaAndEstadoIn(sede, disciplina, List.of("1", "0")).orElseGet(() -> {
-                    Listadisciplina nueva = new Listadisciplina();
-                    nueva.setSede(sede);
-                    nueva.setDisciplina(disciplina);
-                    nueva.setEstado("1");
-                    return listadisciplinaRepository.save(nueva);
-                });
+            Listadisciplina nueva = new Listadisciplina();
+            nueva.setSede(sede);
+            nueva.setDisciplina(disciplina);
+            nueva.setEstado("1");
+            return listadisciplinaRepository.save(nueva);
+        });
         listadisciplina.setEstado("1");
         listadisciplinaRepository.save(listadisciplina);
         for (HorarioDTO dto : dtos) {
@@ -137,9 +139,10 @@ public class HorarioController {
             horarioNuevo.setTurno(turno);
 
             horarioNuevo.setListadisciplina(listadisciplina);
+            horarioNuevo.setContador(0);
             horarioNuevo.setEstado("1");
-            horarioNuevo.setFechaCrea(LocalDateTime.now());
-            horarioNuevo.setUsuarioCrea("1");
+            horarioNuevo.setFechacreada(LocalDateTime.now());
+            horarioNuevo.setUsuariocrea("1");
             horarioService.save(horarioNuevo);
 
         }
@@ -149,15 +152,34 @@ public class HorarioController {
     @Operation(summary = "Actualiza un horario")
     @PutMapping("/{id}")
     public ResponseEntity<HorarioDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody HorarioDTO dto) {
-        dto.setIdHorario(id);
-        Horario obj = horarioService.update(id, mapperUtil.map(dto, Horario.class));
-        return ResponseEntity.ok(mapperUtil.map(obj, HorarioDTO.class));
+        Horario actual = horarioService.findById(id);
+
+        // 2. Mapear lo que manda el usuario
+        Horario horario = mapperUtil.map(dto, Horario.class);
+        horario.setIdHorario(id);
+
+        // CAMPOS QUE SE MANTIENEN
+        horario.setContador(actual.getContador());
+        horario.setUsuariocrea(actual.getUsuariocrea());
+        horario.setFechacreada(actual.getFechacreada());
+
+        Horario actualizado = horarioService.update(id, horario);
+
+        return ResponseEntity.ok(mapperUtil.map(actualizado, HorarioDTO.class));
     }
 
     @Operation(summary = "Elimina un horario")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        horarioService.delete(id);
+
+        Horario horario = horarioService.findById(id);
+        if (horario == null) {
+            throw new EntityNotFoundException("Horario no encontrado");
+        }
+        horario.setEstado("0");
+        horario.setUsuariomodifica("1");
+        horario.setFechamodificada(LocalDateTime.now());
+        horarioService.save(horario);
         return ResponseEntity.noContent().build();
     }
 }

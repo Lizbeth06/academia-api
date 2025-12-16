@@ -2536,17 +2536,19 @@ INSERT INTO tbl_anio VALUES
 ('2030'),
 ('2031');
 
-INSERT INTO tbl_criterioparticipacion VALUES
+INSERT INTO tbl_modalidad VALUES
 ('DEPORTE'),
 ('PARADEPORTE');
+
+INSERT INTO tbl_nivel VALUES
+('01','INICIACIÓN'),
+('02','FORMACIÓN'),
+('03','PROYECCIÓN');
 
 INSERT INTO tbl_tipoturno (abreviatura,descripcion) VALUES
 ('M','MAÑANA'),
 ('T','TARDE'),
 ('N','NOCHE');
-
-INSERT INTO tbl_tipoinvolucrado(descripcion,parentesco) VALUES
-('HIJO(A)',2),('PAPÁ',1),('MAMÁ',1),('HERMANO(A)',0),('ABUELO(A)',1),('TÍO(A)',1),('SOBRINO(A)',2),('NIETO(A)',1),('PRIMO(A)',0),('OTRO',0);
 
 INSERT INTO tbl_tiposeguro VALUES
 ('SIS (SEGURO INTEGRAL DE SALUD)'), ('ESSALUD'),('PRIVADO'), ('OTROS');

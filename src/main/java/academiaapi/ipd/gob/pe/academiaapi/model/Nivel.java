@@ -11,23 +11,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tbl_categoriaedad")
-public class Categoriaedad {
+@Table(name = "tbl_nivel")
+public class Nivel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @EqualsAndHashCode.Include
-    private Integer idCategoriaedad;
+    private Integer idNivel;
 
     @Column(nullable = false)
-    private String descripcion;
+    private String codigo;
 
     @Column(nullable = false)
-    private Integer edadminina;
-
-    @Column(nullable = false)
-    private Integer edadmaxima;
-
-    @Column(nullable = false)
-    private String estado;
+    private String descripcion; //Iniciación/Formacion/ proyeccion
 
 }
