@@ -22,7 +22,7 @@ public class Categoriaedad {
     private String descripcion;
 
     @Column(nullable = false)
-    private Integer edadminina;
+    private Integer edadminima;
 
     @Column(nullable = false)
     private Integer edadmaxima;

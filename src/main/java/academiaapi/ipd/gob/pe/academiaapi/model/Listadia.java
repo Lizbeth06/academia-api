@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "tbl_listadia")
-
 public class Listadia {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

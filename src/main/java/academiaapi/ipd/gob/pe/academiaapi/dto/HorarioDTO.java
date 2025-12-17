@@ -22,13 +22,13 @@ public class HorarioDTO {
     @NotNull
     private Integer limitePreinscripcion;
 
-    private String usuarioCrea;
+    private String usuariocrea;
 
-    private LocalDateTime fechaCreada;
+    private LocalDateTime fechacreada;
 
-    private String usuarioModifica;
+    private String usuariomodifica;
 
-    private LocalDateTime fechaModificada;
+    private LocalDateTime fechamodificada;
 
     @NotNull
     private String estado;
