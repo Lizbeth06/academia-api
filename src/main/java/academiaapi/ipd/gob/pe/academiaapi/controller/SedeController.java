@@ -28,8 +28,13 @@ public class SedeController {
 
     @Operation(summary = "Lista todas las sedes")
     @GetMapping
-    public ResponseEntity<List<SedeDTO>> findAll() {
-        List<SedeDTO> list = mapperUtil.mapList(sedeService.findAll(), SedeDTO.class);
+    public ResponseEntity<List<SedeDTO>> findAll(@RequestParam(required = false) Integer codubi) {
+        List<SedeDTO> list;
+        if(codubi != null){
+            list = mapperUtil.mapList(sedeService.findByCodubi(codubi), SedeDTO.class);
+        }else{
+            list = mapperUtil.mapList(sedeService.findAll(), SedeDTO.class);
+        }
         return ResponseEntity.ok(list);
     }
 

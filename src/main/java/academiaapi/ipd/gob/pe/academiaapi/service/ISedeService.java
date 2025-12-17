@@ -10,4 +10,6 @@ import java.util.Map;
 public interface ISedeService extends ICRUD<Sede,Integer> {
 
     public List<Sede> getSedes(String ubicacion);
+
+    public List<Sede> findByCodubi(Integer codubi);
 }

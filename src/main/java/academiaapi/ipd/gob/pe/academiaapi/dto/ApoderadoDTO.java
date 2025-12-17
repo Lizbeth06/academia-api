@@ -20,4 +20,6 @@ public class ApoderadoDTO {
     private String telefono;
     private String direccion;
     private LocalDate fNacimiento;
+    private TipodocumentoDTO tipodocumento;
+    private UbigeoDTO ubigeo;
 }

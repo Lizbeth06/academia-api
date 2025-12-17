@@ -28,5 +28,5 @@ public class Apoderadoparticipante {
 
     @ManyToOne
     @JoinColumn(name = "id_parentesco", foreignKey = @ForeignKey(name = "FK_PERSONA_PARENTESCO"))
-    private Parentesco parentesco;
+    private Tiporelacion tiporelacion;
 }

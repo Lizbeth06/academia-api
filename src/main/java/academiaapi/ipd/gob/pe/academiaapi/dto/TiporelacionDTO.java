@@ -1,7 +1,6 @@
 package academiaapi.ipd.gob.pe.academiaapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,12 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoinvolucradoDTO {
-    private Integer idTipoinvolucrado;
+public class TiporelacionDTO {
+    private Integer idParentesco;
 
     @NotBlank
     private String descripcion;
-
-    @NotNull
-    private Integer parentesco;
 }
