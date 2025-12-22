@@ -21,6 +21,6 @@ public class SuccessResult<T> implements IResultGeneric<T> {
 
     @Override
     public boolean hasSucceeded() {
-        return false;
+        return true;
     }
 }

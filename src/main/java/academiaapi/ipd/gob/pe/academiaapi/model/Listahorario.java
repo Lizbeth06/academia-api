@@ -1,10 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -19,6 +16,15 @@ public class Listahorario {
     @Id
     @EqualsAndHashCode.Include
     private Integer idListahorario;
+
+    @Column(nullable = false)
+    private String intervaloHora;
+
+    @Column(nullable = false)
+    private String turno;
+
+    @Column(nullable = false)
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_convocatoria",foreignKey = @ForeignKey(name = "FK_LISTAHORARIO_CONVOCATORIA"))

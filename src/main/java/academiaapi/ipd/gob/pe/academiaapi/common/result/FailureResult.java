@@ -9,7 +9,6 @@ public class FailureResult<T> implements IResultGeneric<T>{
     private final T value;
 
     public FailureResult(int statusCode, T value) {
-        this.hasSucceeded = false;
         this.statusCode = statusCode;
         this.value = value;
     }

@@ -27,7 +27,6 @@ public class Convocatoria {
     @Column(nullable = false)
     private String subtitulo;
 
-    @Column(nullable = false)
     private String descripcion;
 
     @Column
@@ -43,5 +42,9 @@ public class Convocatoria {
     private LocalDateTime fechamodificada;
 
     private String usuariomodifica;
+
+    @ManyToOne
+    @JoinColumn(name = "id_temporada", foreignKey = @ForeignKey(name = "FK_CONVOCATORIA_TEMPORADA"))
+    private Temporada temporada;
 
 }

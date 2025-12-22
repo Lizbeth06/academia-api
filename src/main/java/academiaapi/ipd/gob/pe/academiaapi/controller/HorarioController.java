@@ -55,6 +55,14 @@ public class HorarioController {
         return ResponseEntity.ok(list);
     }
 
+    @Operation(summary = "Lista todo los horarios por sedes")
+    @GetMapping("/horariosxsede/{idSede}")
+    public ResponseEntity<List<HorarioDTO>> getAllHorariosxsedes(@PathVariable("idSede") Integer idSede) {
+        List<Horario> obj =horarioService.getHorarioxsede(idSede);
+        List<HorarioDTO> list = mapperUtil.mapList(obj, HorarioDTO.class);
+        return ResponseEntity.ok(list);
+    }
+
     @Operation(summary = "Lista un horario")
     @GetMapping("/{id}")
     public ResponseEntity<HorarioDTO> findById(@PathVariable("id") Integer id) {
@@ -114,38 +122,49 @@ public class HorarioController {
         if (dtos.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
+
         HorarioDTO primerDto = dtos.get(0);
 
-        Sede sede = sedeRepository.findById(primerDto.getListadisciplina().getSede().getIdSede())
-                .orElseThrow(() -> new RuntimeException("Sede no encontrada"));
+        Sede sede = sedeRepository.findById(
+                primerDto.getListadisciplina().getSede().getIdSede()
+        ).orElseThrow(() -> new RuntimeException("Sede no encontrada"));
 
-        Disciplina disciplina = disciplinaRepository.findById(primerDto.getListadisciplina().getDisciplina().getIdDisciplina())
-                .orElseThrow(() -> new RuntimeException("Disciplina no encontrada"));
+        Disciplina disciplina = disciplinaRepository.findById(
+                primerDto.getListadisciplina().getDisciplina().getIdDisciplina()
+        ).orElseThrow(() -> new RuntimeException("Disciplina no encontrada"));
 
-        Listadisciplina listadisciplina = listadisciplinaRepository.findBySedeAndDisciplinaAndEstadoIn(sede, disciplina, List.of("1", "0")).orElseGet(() -> {
-            Listadisciplina nueva = new Listadisciplina();
-            nueva.setSede(sede);
-            nueva.setDisciplina(disciplina);
-            nueva.setEstado("1");
-            return listadisciplinaRepository.save(nueva);
-        });
-        listadisciplina.setEstado("1");
-        listadisciplinaRepository.save(listadisciplina);
+        Listadisciplina listadisciplina =
+                listadisciplinaRepository.findBySedeAndDisciplina(sede, disciplina)
+                        .orElseGet(() -> {
+                            Listadisciplina nueva = new Listadisciplina();
+                            nueva.setSede(sede);
+                            nueva.setDisciplina(disciplina);
+                            nueva.setEstado("1");
+                            return listadisciplinaRepository.save(nueva);
+                        });
+
+        if ("0".equals(listadisciplina.getEstado())) {
+            listadisciplina.setEstado("1");
+            listadisciplinaRepository.save(listadisciplina);
+        }
+
         for (HorarioDTO dto : dtos) {
+
             Horario horarioNuevo = mapperUtil.map(dto, Horario.class);
 
             Turno turno = turnoRepository.findById(dto.getTurno().getIdTurno())
                     .orElseThrow(() -> new RuntimeException("Turno no encontrado"));
-            horarioNuevo.setTurno(turno);
 
+            horarioNuevo.setTurno(turno);
             horarioNuevo.setListadisciplina(listadisciplina);
             horarioNuevo.setContador(0);
             horarioNuevo.setEstado("1");
             horarioNuevo.setFechacreada(LocalDateTime.now());
             horarioNuevo.setUsuariocrea("1");
-            horarioService.save(horarioNuevo);
 
+            horarioService.save(horarioNuevo);
         }
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -154,11 +173,9 @@ public class HorarioController {
     public ResponseEntity<HorarioDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody HorarioDTO dto) {
         Horario actual = horarioService.findById(id);
 
-        // 2. Mapear lo que manda el usuario
         Horario horario = mapperUtil.map(dto, Horario.class);
         horario.setIdHorario(id);
 
-        // CAMPOS QUE SE MANTIENEN
         horario.setContador(actual.getContador());
         horario.setUsuariocrea(actual.getUsuariocrea());
         horario.setFechacreada(actual.getFechacreada());

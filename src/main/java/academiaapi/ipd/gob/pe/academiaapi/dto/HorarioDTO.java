@@ -37,8 +37,6 @@ public class HorarioDTO {
 
     private ListadisciplinaDTO listadisciplina;
 
-    private TemporadaDTO temporada;
-
     private ModalidadDTO modalidad;
 
     private CategoriaedadDTO categoriaedad;

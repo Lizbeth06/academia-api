@@ -2519,13 +2519,13 @@ INSERT INTO tbl_sector VALUES
 ('PRIVADO');
 
 INSERT INTO tbl_dias VALUES
-('01','LUNES'),
-('02','MARTES'),
-('03','MIÉRCOLES'),
-('04','JUEVES'),
-('05','VIERNES'),
-('06','SÁBADO'),
-('07','DOMINGO');
+('LUN','LUNES'),
+('MAR','MARTES'),
+('MIE','MIÉRCOLES'),
+('JUE','JUEVES'),
+('VIE','VIERNES'),
+('SAB','SÁBADO'),
+('DOM','DOMINGO');
 
 INSERT INTO tbl_anio VALUES
 ('2026'),

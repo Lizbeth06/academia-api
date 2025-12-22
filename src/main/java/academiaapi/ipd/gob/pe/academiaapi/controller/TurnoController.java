@@ -72,7 +72,10 @@ public class TurnoController {
         );
 
         if (!duplicados.isEmpty()) {
-            return ResponseEntity.status(400).body(new FailureResult<>(400,new DetailError("06","Ya existe un turno con la misma hora y los mismos días")));
+            return ResponseEntity.ok(new FailureResult<>(
+                    400,
+                    new DetailError("06", "Ya existe un turno con la misma hora y los mismos días")
+            ));
         }
 
         // Convertir ListadiaDTO a Listadia entidades
@@ -80,7 +83,10 @@ public class TurnoController {
         for (ListadiaDTO ldDto : dto.getListadia()) {
             Dias dia = diasService.findById(ldDto.getDias().getIdDias());
             if (dia == null) {
-                throw new RuntimeException("Día no encontrado");
+                return ResponseEntity.ok(new FailureResult<>(
+                        400,
+                        new DetailError("06", "Día no encontrado")
+                ));
             }
 
             Listadia ld = new Listadia();
@@ -100,7 +106,7 @@ public class TurnoController {
                 .buildAndExpand(obj.getIdTurno())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
+        return  ResponseEntity.ok(new SuccessResult<>("Se guardó correctamente"));
     }
 
     @Operation(summary = "Actualiza un turno")
@@ -125,12 +131,16 @@ public class TurnoController {
         );
 
         if (!duplicados.isEmpty()) {
-            return ResponseEntity.status(400).body(new FailureResult<>(400,new DetailError("06","Ya existe un turno con la misma hora y los mismos días")));
+            return ResponseEntity.ok(new FailureResult<>(
+                    400,
+                    new DetailError("06", "Ya existe un turno con la misma hora y los mismos días")
+            ));
         }
         Turno existente = turnoService.findById(id);
 
         if (existente == null) {
-            throw new RuntimeException("turno no encontrado");
+            return ResponseEntity.ok(
+                    new FailureResult<>(404, "Turno no encontrado"));
         }
 
         existente.setHorainicio(turno.getHorainicio());
@@ -143,7 +153,8 @@ public class TurnoController {
         for (ListadiaDTO ldDto : dto.getListadia()) {
             Dias dia = diasService.findById(ldDto.getDias().getIdDias());
             if (dia == null) {
-                throw new RuntimeException("Día no encontrado: " + ldDto.getDias().getIdDias());
+                return ResponseEntity.ok(
+                        new FailureResult<>(404, "Dias no encontrado"));
             }
             Listadia ld = new Listadia();
             ld.setTurno(existente);

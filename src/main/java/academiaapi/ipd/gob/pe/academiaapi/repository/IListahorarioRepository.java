@@ -9,8 +9,8 @@ import java.util.List;
 public interface IListahorarioRepository extends IGenericRepo<Listahorario,Integer>{
     @Query("""
             SELECT lh FROM Listahorario lh
-            WHERE lh.horario.temporada.fAperturainscripcion <= CURRENT_DATE AND
-            lh.horario.temporada.fCierreinscripcion >= CURRENT_DATE AND
+            WHERE lh.convocatoria.temporada.fAperturainscripcion <= CURRENT_DATE AND
+            lh.convocatoria.temporada.fCierreinscripcion >= CURRENT_DATE AND
             lh.horario.estado = '1' AND
             lh.horario.categoriaEdad.edadminima <= ?1 AND
             lh.horario.categoriaEdad.edadmaxima >= ?1 AND

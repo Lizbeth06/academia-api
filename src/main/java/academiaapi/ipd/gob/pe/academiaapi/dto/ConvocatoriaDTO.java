@@ -20,7 +20,6 @@ public class ConvocatoriaDTO {
     @NotBlank
     private String subtitulo;
 
-    @NotBlank
     private String descripcion;
 
     private LocalDateTime fechacreada;
@@ -34,7 +33,7 @@ public class ConvocatoriaDTO {
     private String urlImagen;
 
     @NotNull
-    private Integer estado;
+    private String estado;
 
-
+    private TemporadaDTO temporada;
 }
