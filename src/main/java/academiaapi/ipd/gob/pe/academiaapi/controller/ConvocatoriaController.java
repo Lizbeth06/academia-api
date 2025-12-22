@@ -2,20 +2,20 @@ package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.ConvocatoriaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Convocatoria;
+import academiaapi.ipd.gob.pe.academiaapi.service.IImageService;
 import academiaapi.ipd.gob.pe.academiaapi.service.IConvocatoriaService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URI;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -24,7 +24,10 @@ import java.util.List;
 @Tag(name = "tbl_convocatoria")
 public class ConvocatoriaController {
     private final IConvocatoriaService convocatoriaService;
+    private final IImageService cloudinaryService;
     private final MapperUtil mapperUtil;
+
+    private static final String FOLDER = "convocatorias";
 
     @Operation(summary = "Lista todas las convicatorias")
     @GetMapping
@@ -40,28 +43,16 @@ public class ConvocatoriaController {
         return ResponseEntity.ok(mapperUtil.map(obj, ConvocatoriaDTO.class));
     }
 
-    @Operation(summary = "Crea una convocatoria")
-    @PostMapping
-    public ResponseEntity<Void> save(@Valid @RequestBody ConvocatoriaDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
-        System.out.println("USUARIO ACTUAL:" + userDetails.getUsername());
+    @Operation(summary = "Crea una convocatoria con imagen")
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> save(
+            @RequestPart("convocatoria") @Valid ConvocatoriaDTO dto,
+            @RequestPart(value = "imagen", required = false) MultipartFile imagen
+    ) throws IOException {
 
-        Convocatoria obj = convocatoriaService.save(mapperUtil.map(dto, Convocatoria.class));
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConvocatoria()).toUri();
-        return ResponseEntity.created(location).build();
-    }
 
-    @Operation(summary = "Actualiza una convocatoria")
-    @PutMapping("/{id}")
-    public ResponseEntity<ConvocatoriaDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody ConvocatoriaDTO dto) {
-        dto.setIdConvocatoria(id);
-        Convocatoria obj = convocatoriaService.update(id, mapperUtil.map(dto, Convocatoria.class));
-        return ResponseEntity.ok(mapperUtil.map(obj, ConvocatoriaDTO.class));
-    }
 
-    @Operation(summary = "Elimina una convocatoria")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        convocatoriaService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 }

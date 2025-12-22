@@ -50,10 +50,6 @@ public class Horario {
     private Listadisciplina listadisciplina;
 
     @ManyToOne
-    @JoinColumn(name = "id_temporada", foreignKey = @ForeignKey(name = "FK_HORARIO_TEMPORADA"))
-    private Temporada temporada;
-
-    @ManyToOne
     @JoinColumn(name = "id_modalidad", foreignKey = @ForeignKey(name = "FK_HORARIO_MODALIDAD"))
     private Modalidad modalidad ;
 

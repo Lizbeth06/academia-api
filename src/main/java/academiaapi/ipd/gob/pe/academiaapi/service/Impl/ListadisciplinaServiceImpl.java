@@ -30,8 +30,7 @@ public class ListadisciplinaServiceImpl extends CRUDImpl<Listadisciplina,Integer
 
     @Override
     public Optional<Listadisciplina> getListadisciplinaSD(Sede sede, Disciplina disciplina, List<String> estado) {
-        return ListadisciplinaRepository.findBySedeAndDisciplinaAndEstadoIn(sede,disciplina,estado);
+        return ListadisciplinaRepository.findBySedeAndDisciplina(sede,disciplina);
     }
-
 
 }

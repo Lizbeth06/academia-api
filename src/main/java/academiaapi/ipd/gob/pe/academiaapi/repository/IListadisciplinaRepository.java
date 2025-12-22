@@ -12,5 +12,5 @@ public interface IListadisciplinaRepository extends IGenericRepo<Listadisciplina
 
     Optional<Listadisciplina> findBySedeIdSedeAndDisciplinaIdDisciplina(Integer idSede, Integer idDisciplina);
 
-    Optional<Listadisciplina> findBySedeAndDisciplinaAndEstadoIn(Sede sede, Disciplina disciplina, List<String> estado);
+    Optional<Listadisciplina> findBySedeAndDisciplina(Sede sede, Disciplina disciplina);
 }
