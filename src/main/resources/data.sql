@@ -3025,3 +3025,15 @@ INSERT INTO tbl_disciplina(codigo,descripcion,estado,f_registro,edad_deporte,eda
 ('5500000000', 'VELA',1,GETDATE(),'6 A 17 AÑOS','6 A 59 AÑOS'),
 ('5600000000', 'VOLEIBOL',1,GETDATE(),'6 A 17 AÑOS','6 A 59 AÑOS'),
 ('5700000000', 'VUELO LIBRE',1,GETDATE(),'6 A 17 AÑOS','6 A 59 AÑOS');
+
+--Datos de ejemplo de tipos de relación dentre apoderado y participante
+INSERT INTO tbl_tiporelacion(descripcion) VALUES
+('PADRE'),
+('MADRE'),
+('HERMANO'),
+('TÍO(A)'),
+('ABUELO(A)'),
+('TUTOR LEGAL'),
+('APODERADO LEGAL'),
+('CUIDADOR'),
+('OTRO');

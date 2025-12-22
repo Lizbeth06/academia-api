@@ -1,8 +1,10 @@
 package academiaapi.ipd.gob.pe.academiaapi.service.Impl;
 
+import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
+import academiaapi.ipd.gob.pe.academiaapi.model.Apoderado;
 import academiaapi.ipd.gob.pe.academiaapi.model.Participante;
-import academiaapi.ipd.gob.pe.academiaapi.repository.IGenericRepo;
 import academiaapi.ipd.gob.pe.academiaapi.repository.IParticipanteRepository;
+import academiaapi.ipd.gob.pe.academiaapi.repository.IGenericRepo;
 import academiaapi.ipd.gob.pe.academiaapi.service.IParticipanteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,4 +18,9 @@ public class ParticipanteServiceImpl extends CRUDImpl<Participante,Integer> impl
     protected IGenericRepo<Participante, Integer> getRepo() {
         return participanteRepository;
     }
+
+    @Override
+    public Participante findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento){
+        return this.participanteRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("APODERADO NO ENCONTRADO"));
+    };
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TiporelacionDTO {
-    private Integer idParentesco;
+    private Integer idTiporelacion;
 
     @NotBlank
     private String descripcion;

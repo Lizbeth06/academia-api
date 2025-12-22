@@ -1,4 +1,5 @@
 package academiaapi.ipd.gob.pe.academiaapi.service.Impl;
+import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
 import academiaapi.ipd.gob.pe.academiaapi.model.Apoderadoparticipante;
 import academiaapi.ipd.gob.pe.academiaapi.repository.IApoderadoparticipanteRepository;
 import academiaapi.ipd.gob.pe.academiaapi.repository.IGenericRepo;
@@ -15,4 +16,9 @@ public class ApoderadoparticipanteServiceImpl extends CRUDImpl<Apoderadoparticip
     protected IGenericRepo<Apoderadoparticipante, Integer> getRepo() {
         return apoderadoparticipanteRepository;
     }
+
+    @Override
+    public Apoderadoparticipante findByApoderadoAndParticipante(Integer idApoderado, Integer idPaticipante){
+        return this.apoderadoparticipanteRepository.findByApoderado_IdApoderadoAndParticipante_IdParticipante(idApoderado, idPaticipante).orElseThrow(()->new ModelNotFoundException("RELACIÓN NO ENCONTRADO"));
+    };
 }
