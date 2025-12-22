@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.ParticipanteDTO;
+import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
 import academiaapi.ipd.gob.pe.academiaapi.model.Participante;
 import academiaapi.ipd.gob.pe.academiaapi.service.IParticipanteService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
@@ -42,7 +43,7 @@ public class ParticipanteController {
             @RequestParam(required = true) Integer idTipodocumento,
             @RequestParam(required = true) String numDocumento
     ) {
-        Participante obj = participanteService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento);
+        Participante obj = participanteService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("PARTICIPANTE NO ENCONTRADO"));;
         return ResponseEntity.ok(mapperUtil.map(obj, ParticipanteDTO.class));
     }
 

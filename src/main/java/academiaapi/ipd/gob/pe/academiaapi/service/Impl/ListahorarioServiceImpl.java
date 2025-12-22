@@ -7,6 +7,8 @@ import academiaapi.ipd.gob.pe.academiaapi.service.IListahorarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ListahorarioServiceImpl extends CRUDImpl<Listahorario,Integer> implements IListahorarioService {
@@ -16,5 +18,10 @@ public class ListahorarioServiceImpl extends CRUDImpl<Listahorario,Integer> impl
     @Override
     protected IGenericRepo<Listahorario, Integer> getRepo() {
         return ListahorarioRepository;
+    }
+
+    @Override
+    public List<Listahorario> findDisponibles(Integer edad, Integer idModalidad, Integer idSede){
+        return this.ListahorarioRepository.findDisponibles(edad,idModalidad,idSede);
     }
 }

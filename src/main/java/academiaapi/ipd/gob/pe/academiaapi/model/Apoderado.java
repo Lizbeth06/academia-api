@@ -13,7 +13,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tbl_apoderado")
+@Table(
+        name = "tbl_apoderado",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_apoderado_tipo_numero_documento",
+                        columnNames = {
+                                "id_tipo_documento",
+                                "num_documento"
+                        }
+                )
+        }
+)
 public class Apoderado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -11,7 +11,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tbl_apoderadoparticipante")
+@Table(
+        name = "tbl_apoderadoparticipante",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_apodarado_participante",
+                        columnNames = {
+                                "id_apoderado",
+                                "id_participante"
+                        }
+                )
+        }
+)
 public class Apoderadoparticipante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -27,6 +38,6 @@ public class Apoderadoparticipante {
     private Participante participante;
 
     @ManyToOne
-    @JoinColumn(name = "id_parentesco", foreignKey = @ForeignKey(name = "FK_PERSONA_PARENTESCO"))
+    @JoinColumn(name = "id_tiporelacion", foreignKey = @ForeignKey(name = "FK_PERSONA_PARENTESCO"))
     private Tiporelacion tiporelacion;
 }

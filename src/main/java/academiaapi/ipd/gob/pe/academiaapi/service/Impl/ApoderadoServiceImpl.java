@@ -8,6 +8,8 @@ import academiaapi.ipd.gob.pe.academiaapi.service.IApoderadoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ApoderadoServiceImpl extends CRUDImpl<Apoderado,Integer> implements IApoderadoService {
@@ -19,7 +21,7 @@ public class ApoderadoServiceImpl extends CRUDImpl<Apoderado,Integer> implements
     }
 
     @Override
-    public Apoderado findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento){
-        return this.apoderadoRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("APODERADO NO ENCONTRADO"));
+    public Optional<Apoderado> findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento){
+        return this.apoderadoRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento);
     };
 }

@@ -7,6 +7,8 @@ import academiaapi.ipd.gob.pe.academiaapi.service.IApoderadoparticipanteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ApoderadoparticipanteServiceImpl extends CRUDImpl<Apoderadoparticipante,Integer> implements IApoderadoparticipanteService {
@@ -18,7 +20,22 @@ public class ApoderadoparticipanteServiceImpl extends CRUDImpl<Apoderadoparticip
     }
 
     @Override
-    public Apoderadoparticipante findByApoderadoAndParticipante(Integer idApoderado, Integer idPaticipante){
-        return this.apoderadoparticipanteRepository.findByApoderado_IdApoderadoAndParticipante_IdParticipante(idApoderado, idPaticipante).orElseThrow(()->new ModelNotFoundException("RELACIÓN NO ENCONTRADO"));
+    public Optional<Apoderadoparticipante> findByApoderadoAndParticipante(Integer idApoderado, Integer idPaticipante){
+        return this.apoderadoparticipanteRepository.findByApoderado_IdApoderadoAndParticipante_IdParticipante(idApoderado, idPaticipante);
     };
+
+    @Override
+    public Apoderadoparticipante findByDocumentoApoderadoAndParticipante(
+            Integer idTipoDocApoderado,
+            String numDocApoderado,
+            Integer idTipoDocParticipante,
+            String numDocParticipante
+    ){
+        return this.apoderadoparticipanteRepository.findByApoderado_tipodocumento_idTipoDocumentoAndApoderado_numDocumentoAndParticipante_tipodocumento_idTipoDocumentoAndParticipante_numDocumento(
+                idTipoDocApoderado,
+                numDocApoderado,
+                idTipoDocParticipante,
+                numDocParticipante
+        ).orElseThrow(()->new ModelNotFoundException("RELACIÓN NO ENCONTRADO"));
+    }
 }
