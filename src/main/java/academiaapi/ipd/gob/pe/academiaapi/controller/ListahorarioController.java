@@ -1,12 +1,8 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
-import academiaapi.ipd.gob.pe.academiaapi.dto.ConvocatoriaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ListahorarioDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ListahorariobloqueDTO;
-import academiaapi.ipd.gob.pe.academiaapi.model.Convocatoria;
-import academiaapi.ipd.gob.pe.academiaapi.model.Horario;
 import academiaapi.ipd.gob.pe.academiaapi.model.Listahorario;
-import academiaapi.ipd.gob.pe.academiaapi.model.Temporada;
 import academiaapi.ipd.gob.pe.academiaapi.service.IConvocatoriaService;
 import academiaapi.ipd.gob.pe.academiaapi.service.IListahorarioService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
@@ -15,11 +11,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @Controller
@@ -45,6 +42,24 @@ public class ListahorarioController {
         return ResponseEntity.ok(mapperUtil.map(obj, ListahorarioDTO.class));
     }
 
+    @Operation(summary = "Lista la tabla listahorarios disponible para su inscripcion")
+    @GetMapping("/disponibles")
+    public ResponseEntity<List<ListahorarioDTO>> findDisponibles(
+            @RequestParam(required = true) Integer edad,
+            @RequestParam(required = true) Integer idModalidad,
+            @RequestParam(required = true) Integer idSede
+    ) {
+        List<Listahorario> obj = listahorarioService.findDisponibles(edad, idModalidad, idSede);
+        return ResponseEntity.ok(mapperUtil.mapList(obj, ListahorarioDTO.class));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> save(@Valid @RequestBody ListahorarioDTO dto) {
+        Listahorario obj = listahorarioService.save(mapperUtil.map(dto, Listahorario.class));
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdListahorario()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
     @Operation(summary = "Crea una varias lista horario")
     @PostMapping("/crear-bloque")
     public ResponseEntity<ListahorariobloqueDTO> crearBloque(@Valid @RequestBody ListahorariobloqueDTO dto) {
@@ -65,7 +80,6 @@ public class ListahorarioController {
     public ResponseEntity<Void> eliminarConvocatoria(@PathVariable Integer idConvocatoria) {
 
         listahorarioService.eliminarConvocatoria(idConvocatoria);
-
         return ResponseEntity.noContent().build();
     }
 }

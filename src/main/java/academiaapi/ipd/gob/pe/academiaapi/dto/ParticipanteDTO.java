@@ -19,5 +19,4 @@ public class ParticipanteDTO {
     private LocalDate fNacimiento;
     private Boolean presentaDiscapacidad;
     private TipodocumentoDTO tipodocumento;
-    private TiposeguroDTO tiposeguro;
 }

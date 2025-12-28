@@ -2,6 +2,7 @@ package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.ApoderadoDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ApoderadoparticipanteDTO;
+import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
 import academiaapi.ipd.gob.pe.academiaapi.model.Apoderado;
 import academiaapi.ipd.gob.pe.academiaapi.model.Apoderadoparticipante;
 import academiaapi.ipd.gob.pe.academiaapi.service.IApoderadoService;
@@ -46,16 +47,16 @@ public class ApoderadoController {
         @RequestParam(required = true) Integer idTipodocumento,
         @RequestParam(required = true) String numDocumento
     ) {
-        Apoderado obj = apoderadoService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento);
+        Apoderado obj = apoderadoService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("APODERADO NO ENCONTRADO"));;
         return ResponseEntity.ok(mapperUtil.map(obj, ApoderadoDTO.class));
     }
 
-    @Operation(summary = "Obtener la relación entre un apoderado y un participante")
-    @GetMapping("/{idApoderado}/participante/{idParticipante}")
-    public ResponseEntity<ApoderadoparticipanteDTO> findRelacionParticipante(@PathVariable("idApoderado") Integer idApoderado, @PathVariable("idParticipante") Integer idParticipante) {
-        Apoderadoparticipante obj = apoderadoparticipanteService.findByApoderadoAndParticipante(idApoderado, idParticipante);
-        return ResponseEntity.ok(mapperUtil.map(obj, ApoderadoparticipanteDTO.class));
-    }
+//    @Operation(summary = "Obtener la relación entre un apoderado y un participante")
+//    @GetMapping("/{idApoderado}/participante/{idParticipante}")
+//    public ResponseEntity<ApoderadoparticipanteDTO> findRelacionParticipante(@PathVariable("idApoderado") Integer idApoderado, @PathVariable("idParticipante") Integer idParticipante) {
+//        Apoderadoparticipante obj = apoderadoparticipanteService.findByApoderadoAndParticipante(idApoderado, idParticipante).orElseThrow(()->new ModelNotFoundException("RELACIÓN NO ENCONTRADO"));;
+//        return ResponseEntity.ok(mapperUtil.map(obj, ApoderadoparticipanteDTO.class));
+//    }
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody ApoderadoDTO dto) {

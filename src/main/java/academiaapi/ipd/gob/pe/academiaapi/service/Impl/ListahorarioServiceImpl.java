@@ -3,7 +3,6 @@ package academiaapi.ipd.gob.pe.academiaapi.service.Impl;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ConvocatoriaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ListahorarioDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ListahorariobloqueDTO;
-import academiaapi.ipd.gob.pe.academiaapi.dto.TemporadaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Convocatoria;
 import academiaapi.ipd.gob.pe.academiaapi.model.Horario;
 import academiaapi.ipd.gob.pe.academiaapi.model.Listahorario;
@@ -141,6 +140,9 @@ public class ListahorarioServiceImpl extends CRUDImpl<Listahorario, Integer> imp
 
     }
 
+    public List<Listahorario> findDisponibles(Integer edad, Integer idModalidad, Integer idSede){
+        return this.listahorarioRepository.findDisponibles(edad,idModalidad,idSede);
+    }
 }
 
 

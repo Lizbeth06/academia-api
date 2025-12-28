@@ -4,6 +4,8 @@ import academiaapi.ipd.gob.pe.academiaapi.dto.ApoderadoparticipanteDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Apoderadoparticipante;
 import academiaapi.ipd.gob.pe.academiaapi.service.IApoderadoparticipanteService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/apoderadoparticipante")
 @RequiredArgsConstructor
+@Tag(name = "tbl_apoderadoparticipante")
 public class ApoderadoparticipanteController {
     private final IApoderadoparticipanteService apoderadoparticipanteService;
     private final MapperUtil mapperUtil;
@@ -30,6 +33,23 @@ public class ApoderadoparticipanteController {
     @GetMapping("/{id}")
     public ResponseEntity<ApoderadoparticipanteDTO> findById(@PathVariable("id") Integer id) {
         Apoderadoparticipante obj = apoderadoparticipanteService.findById(id);
+        return ResponseEntity.ok(mapperUtil.map(obj, ApoderadoparticipanteDTO.class));
+    }
+
+    @Operation(summary = "Busca si dos personas estan relacionadas por su tipo y nro de documento")
+    @GetMapping("/tipo-numero-documento")
+    public ResponseEntity<ApoderadoparticipanteDTO> findByDocumento(
+            @RequestParam("idTipoDocApoderado") Integer idTipoDocApoderado,
+            @RequestParam("numDocApoderado") String numDocApoderado,
+            @RequestParam("idTipoDocParticipante") Integer idTipoDocParticipante,
+            @RequestParam("numDocParticipante") String numDocParticipante
+    ) {
+        Apoderadoparticipante obj = apoderadoparticipanteService.findByDocumentoApoderadoAndParticipante(
+          idTipoDocApoderado,
+          numDocApoderado,
+          idTipoDocParticipante,
+          numDocParticipante
+        );
         return ResponseEntity.ok(mapperUtil.map(obj, ApoderadoparticipanteDTO.class));
     }
 

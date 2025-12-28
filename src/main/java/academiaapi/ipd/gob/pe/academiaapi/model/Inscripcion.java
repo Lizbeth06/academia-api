@@ -27,8 +27,8 @@ public class Inscripcion {
     private String observacion;
 
     @ManyToOne
-    @JoinColumn(name = "id_convocatoria",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_CONVOCATORIA"))
-    private Convocatoria convocatoria;
+    @JoinColumn(name = "id_listahorario",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_LISTAHORARIO"))
+    private Listahorario listahorario;
 
     @ManyToOne
     @JoinColumn(name = "id_estado",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_ESTADO"))
@@ -41,4 +41,8 @@ public class Inscripcion {
     @ManyToOne
     @JoinColumn(name = "id_tipoinscripcion",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_TIPOINSCRIPCION"))
     private Tipoinscripcion tipoinscripcion;
+
+    @ManyToOne
+    @JoinColumn(name = "id_apoderadoparticipante",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_APODERADOPARTICIPANTE"))
+    private Apoderadoparticipante Apoderadoparticipante;
 }

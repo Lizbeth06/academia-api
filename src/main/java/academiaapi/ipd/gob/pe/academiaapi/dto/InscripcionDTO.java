@@ -25,14 +25,15 @@ public class InscripcionDTO {
     @NotNull
     private LocalDate finscripcion;
 
-    @NotBlank
     private String observacion;
 
-    private ConvocatoriaDTO convocatoria;
+    private ListahorarioDTO listahorario;
 
     private EstadoDTO estado;
 
     private TiposeguroDTO tiposeguro;
 
     private TipoinscripcionDTO tipoinscripcion;
+
+    private ApoderadoparticipanteDTO apoderadoparticipante;
 }

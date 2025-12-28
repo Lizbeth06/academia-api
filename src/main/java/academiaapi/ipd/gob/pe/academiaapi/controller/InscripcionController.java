@@ -8,8 +8,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,6 +31,13 @@ public class InscripcionController {
     public ResponseEntity<List<InscripcionDTO>> findAll() {
         List<InscripcionDTO> list = mapperUtil.mapList(inscripcionService.findAll(), InscripcionDTO.class);
         return ResponseEntity.ok(list);
+    }
+
+    @Operation(summary = "Registra un conjunto de inscripciónes")
+    @PostMapping("/multiples")
+    public ResponseEntity<List<Inscripcion>> saveAll(@RequestBody @Valid List<InscripcionDTO> list) {
+        List<Inscripcion> inscripciones = inscripcionService.saveAll(mapperUtil.mapList(list, Inscripcion.class));
+        return ResponseEntity.ok(inscripciones);
     }
 
     @Operation(summary = "Lista una inscripción")
@@ -59,5 +68,12 @@ public class InscripcionController {
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         inscripcionService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Muestra un archivo pdf on la ficha de preinscripción")
+    @GetMapping(value = "/{id}/ficha-preinscripcion", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> generarFichaPreinscripcion(@PathVariable("id") Integer idInscripcion) throws Exception{
+        byte[] data = inscripcionService.generarFichaPreinscripcion(idInscripcion);
+        return ResponseEntity.ok(data);
     }
 }

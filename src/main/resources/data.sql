@@ -3037,3 +3037,8 @@ INSERT INTO tbl_tiporelacion(descripcion) VALUES
 ('APODERADO LEGAL'),
 ('CUIDADOR'),
 ('OTRO');
+
+--Datosde ejemplo relacionados con estados de inscripciones
+INSERT INTO tbl_estado(descripcion) VALUES
+('ACTIVO'),
+('INACTIVO');

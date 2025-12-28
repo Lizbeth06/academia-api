@@ -9,6 +9,8 @@ import academiaapi.ipd.gob.pe.academiaapi.service.IParticipanteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ParticipanteServiceImpl extends CRUDImpl<Participante,Integer> implements IParticipanteService {
@@ -20,7 +22,7 @@ public class ParticipanteServiceImpl extends CRUDImpl<Participante,Integer> impl
     }
 
     @Override
-    public Participante findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento){
-        return this.participanteRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("APODERADO NO ENCONTRADO"));
+    public Optional<Participante> findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento){
+        return this.participanteRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento);
     };
 }
