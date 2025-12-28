@@ -132,7 +132,6 @@
 			<artifactId>cloudinary-http44</artifactId>
 			<version>1.33.0</version>
 		</dependency>
-
 		<!-- para subir archivo al Google Drive -->
 		<!-- Cliente principal de Google API -->
 		<dependency>

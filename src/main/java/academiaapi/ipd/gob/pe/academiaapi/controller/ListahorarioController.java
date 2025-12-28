@@ -48,45 +48,24 @@ public class ListahorarioController {
     @Operation(summary = "Crea una varias lista horario")
     @PostMapping("/crear-bloque")
     public ResponseEntity<ListahorariobloqueDTO> crearBloque(@Valid @RequestBody ListahorariobloqueDTO dto) {
-        ConvocatoriaDTO convocatoriaDTO = dto.getConvocatoria();
-        Temporada temporada = new Temporada();
-        temporada.setIdTemporada(dto.getConvocatoria().getTemporada().getIdTemporada());
-
-        Convocatoria convocatoria = new Convocatoria();
-        convocatoria.setTitulo(convocatoriaDTO.getTitulo());
-        convocatoria.setSubtitulo(convocatoriaDTO.getSubtitulo());
-        convocatoria.setDescripcion(convocatoriaDTO.getDescripcion());
-        convocatoria.setTemporada(temporada);
-        convocatoria.setUrlImagen(convocatoriaDTO.getUrlImagen());
-        convocatoria.setEstado("1");
-        convocatoria.setFechacreada(java.time.LocalDateTime.now());
-        convocatoria = convocatoriaService.save(convocatoria);
-
-        for (ListahorarioDTO horarioDTO : dto.getListaHorarios()) {
-            Listahorario entity = mapperUtil.map(horarioDTO, Listahorario.class);
-            entity.setConvocatoria(convocatoria);
-
-            if (horarioDTO.getHorario() != null && horarioDTO.getHorario().getIdHorario() != null) {
-                Horario horario = new Horario();
-                horario.setIdHorario(horarioDTO.getHorario().getIdHorario());
-                entity.setHorario(horario);
-            }
-            listahorarioService.save(entity);
-        }
-
+        listahorarioService.guardarBloqueHorarios(dto);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ListahorarioDTO> updateMany(@Valid @PathVariable("id") Integer id, @RequestBody ListahorarioDTO dto) {
-        dto.setIdListahorario(id);
-        Listahorario obj = listahorarioService.update(id, mapperUtil.map(dto, Listahorario.class));
-        return ResponseEntity.ok(mapperUtil.map(obj, ListahorarioDTO.class));
-    }
+    @Operation(summary = "Actualiza la lista de horarios de una convocatoria")
+    @PutMapping("/actualizar-bloque/{idConvocatoria}")
+    public ResponseEntity<ListahorariobloqueDTO> actualizarBloque(@PathVariable Integer idConvocatoria, @Valid @RequestBody ListahorariobloqueDTO dto) {
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        listahorarioService.delete(id);
+        listahorarioService.actualizarBloqueHorarios(idConvocatoria, dto);
+
+        return ResponseEntity.ok(dto);
+    }
+    @Operation(summary = "Eliminar una convocatoria y sus listahorarios")
+    @DeleteMapping("/eliminar/{idConvocatoria}")
+    public ResponseEntity<Void> eliminarConvocatoria(@PathVariable Integer idConvocatoria) {
+
+        listahorarioService.eliminarConvocatoria(idConvocatoria);
+
         return ResponseEntity.noContent().build();
     }
 }
