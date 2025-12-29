@@ -12,6 +12,7 @@ public interface IListahorarioService extends ICRUD<Listahorario,Integer> {
     void guardarBloqueHorarios(ListahorariobloqueDTO dto);
     void eliminarConvocatoria(Integer idConvocatoria);
 
+    public List<Listahorario> findAllListahorario();
     public List<Listahorario> findDisponibles(Integer edad, Integer idModalidad, Integer idSede);
 
 }
