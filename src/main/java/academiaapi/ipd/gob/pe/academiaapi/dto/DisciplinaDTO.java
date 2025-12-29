@@ -28,7 +28,7 @@ public class DisciplinaDTO {
     private String edadParadeporte;
 
     @NotNull
-    private Boolean estado;
+    private String estado;
 
     @NotNull
     private LocalDate fRegistro;

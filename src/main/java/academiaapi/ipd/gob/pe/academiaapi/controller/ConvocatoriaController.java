@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.ConvocatoriaDTO;
+import academiaapi.ipd.gob.pe.academiaapi.dto.ListahorariobloqueDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Convocatoria;
 import academiaapi.ipd.gob.pe.academiaapi.service.IImageService;
 import academiaapi.ipd.gob.pe.academiaapi.service.IConvocatoriaService;
@@ -29,7 +30,7 @@ public class ConvocatoriaController {
 
     private static final String FOLDER = "convocatorias";
 
-    @Operation(summary = "Lista todas las convicatorias")
+    @Operation(summary = "Lista todas las convocatorias")
     @GetMapping
     public ResponseEntity<List<ConvocatoriaDTO>> findAll() {
         List<ConvocatoriaDTO> list = mapperUtil.mapList(convocatoriaService.findAll(), ConvocatoriaDTO.class);
@@ -43,16 +44,19 @@ public class ConvocatoriaController {
         return ResponseEntity.ok(mapperUtil.map(obj, ConvocatoriaDTO.class));
     }
 
-    @Operation(summary = "Crea una convocatoria con imagen")
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> save(
-            @RequestPart("convocatoria") @Valid ConvocatoriaDTO dto,
-            @RequestPart(value = "imagen", required = false) MultipartFile imagen
-    ) throws IOException {
-
-
-
-        return ResponseEntity.noContent().build();
+    @Operation(summary = "Lista una convocatoria, horario y listahorario")
+    @GetMapping("/{id}/listaconvocatoria")
+    public ResponseEntity<ListahorariobloqueDTO> obtenerBloque(@PathVariable Integer id) {
+        ListahorariobloqueDTO response = convocatoriaService.obtenerBloque(id);
+        return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Lista total de las convocatorias")
+    @GetMapping("/listaconvocatorias")
+    public ResponseEntity<List<ListahorariobloqueDTO>> listaTotal() {
+
+        List<ListahorariobloqueDTO> lista = convocatoriaService.listaTotal();
+
+        return ResponseEntity.ok(lista);
+    }
 }
