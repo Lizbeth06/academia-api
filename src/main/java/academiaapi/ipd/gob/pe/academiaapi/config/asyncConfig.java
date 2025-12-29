@@ -1,5 +1,6 @@
 package academiaapi.ipd.gob.pe.academiaapi.config;
 
+import org.apache.tools.ant.taskdefs.Exec;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -20,4 +21,14 @@ public class asyncConfig {
         return executor;
     }
 
+    @Bean(name = "emailTaskExecutor")
+    public Executor emailTskExecutor(){
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("email-");
+        executor.initialize();
+        return executor;
+    }
 }

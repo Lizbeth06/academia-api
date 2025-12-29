@@ -36,6 +36,28 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(err, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(InscriptionLimitReachedException.class)
+    public ResponseEntity<CustomErrorResponse> handleInscriptionLimit(InscriptionLimitReachedException ex, WebRequest request) {
+        CustomErrorResponse err = new CustomErrorResponse(
+                LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(err, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ParticipanteYaInscritoException.class)
+    public ResponseEntity<CustomErrorResponse> handleParticipanteYaInscrito(ParticipanteYaInscritoException ex, WebRequest request) {
+        CustomErrorResponse err = new CustomErrorResponse(
+                LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(err, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(ArithmeticException.class)
     public ResponseEntity<CustomErrorResponse> handleArithmeticException(ArithmeticException ex, WebRequest request) {
         CustomErrorResponse err = new CustomErrorResponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));

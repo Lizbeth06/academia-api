@@ -7,4 +7,5 @@ import java.util.List;
 public interface IHorarioService extends ICRUD<Horario,Integer>  {
 
     public List<Horario> getHorarioxsede(Integer idSede);
+
 }

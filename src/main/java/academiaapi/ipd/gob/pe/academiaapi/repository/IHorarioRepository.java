@@ -1,6 +1,8 @@
 package academiaapi.ipd.gob.pe.academiaapi.repository;
 
 import academiaapi.ipd.gob.pe.academiaapi.model.Horario;
+import jakarta.persistence.LockModeType;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -36,4 +38,8 @@ public interface IHorarioRepository extends IGenericRepo<Horario, Integer> {
             @Param("idDisciplina") Integer idDisciplina,
             @Param("idSede") Integer idSede
     );
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT h from Horario h WHERE h.idHorario = :idHorario")
+    Optional<Horario> findByIdForUpdate(@Param("idHorario")Integer idHorario);
 }

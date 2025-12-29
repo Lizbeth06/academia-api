@@ -1,60 +1,116 @@
 <!DOCTYPE html>
-
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Felicitación por Inscripción - ACADEMIA IPD</title>
+    <title>Confirmación de Pre-inscripción - ACADEMIA IPD</title>
 </head>
+
 <body style="margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;">
+
 <!-- Contenedor principal -->
 <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8; padding:20px 0;">
     <tr>
         <td align="center">
+
             <!-- Tarjeta -->
-            <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+            <table width="600" cellpadding="0" cellspacing="0"
+                   style="background-color:#ffffff;
+                          border-radius:8px;
+                          overflow:hidden;
+                          box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+
                 <!-- Encabezado -->
                 <tr>
-                    <td style="background-color:#0d47a1; padding:20px; text-align:center;">
-                        <h1 style="margin:0; color:#ffffff; font-size:22px;">ACADEMIA IPD</h1>
-                        <p style="margin:5px 0 0; color:#bbdefb; font-size:14px;">Instituto Peruano del Deporte</p>
+                    <td style="
+                        background: linear-gradient(
+                            135deg,
+                            #ff6a3d 0%,
+                            #c94a2d 30%,
+                            #5a2ea6 70%,
+                            #7f5af0 100%
+                        );
+                        padding:20px;
+                        text-align:center;">
+
+                        <h1 style="margin:0; color:#ffffff; font-size:22px;">
+                            ACADEMIA IPD
+                        </h1>
+                        <p style="margin:5px 0 0; color:#ffffff; font-size:14px;">
+                            Instituto Peruano del Deporte
+                        </p>
                     </td>
                 </tr>
 
-                ```
                 <!-- Contenido -->
                 <tr>
                     <td style="padding:30px; color:#333333;">
-                        <h2 style="margin-top:0; font-size:20px; color:#0d47a1;">¡Felicitaciones por tu inscripción!</h2>
+
+                        <h2 style="margin-top:0; font-size:20px; color:#4a2ea6;">
+                            Confirmación de pre-inscripción
+                        </h2>
 
                         <p style="font-size:15px; line-height:1.6;">
-                            Estimado/a <strong th:text="${nombreAlumno}">Nombre del alumno</strong>,
+                            Estimado/a
+                            <strong th:text="${nombreAlumno}">
+                                Nombre del alumno
+                            </strong>,
                         </p>
 
                         <p style="font-size:15px; line-height:1.6;">
-                            Nos complace informarte que tu inscripción en la <strong>ACADEMIA IPD</strong> ha sido
-                            <strong>registrada exitosamente</strong>. A partir de ahora, formas parte de nuestra comunidad
-                            deportiva, donde fomentamos el desarrollo integral a través del deporte, la disciplina y el trabajo en equipo.
+                            Te informamos que tu <strong>pre-inscripción</strong> en la
+                            <strong>ACADEMIA IPD</strong> ha sido
+                            <strong>registrada correctamente</strong>.
                         </p>
 
-                        <!-- Detalle de inscripción -->
-                        <table width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0; background-color:#f8f9fb; border-radius:6px;">
+                        <p style="font-size:15px; line-height:1.6;">
+                            Es importante señalar que esta pre-inscripción
+                            <strong>no constituye una inscripción definitiva</strong>.
+                            La inscripción se concretará únicamente luego de la
+                            <strong>validación presencial de los documentos requeridos</strong>
+                            en nuestras oficinas.
+                        </p>
+
+                        <!-- Detalle de pre-inscripción -->
+                        <table width="100%" cellpadding="0" cellspacing="0"
+                               style="margin:20px 0;
+                                      background-color:#f5f3fa;
+                                      border-radius:6px;
+                                      border-left:4px solid #7f5af0;">
                             <tr>
                                 <td style="padding:15px;">
-                                    <p style="margin:0 0 8px; font-size:14px;"><strong>Disciplina:</strong> <span th:text="${disciplina}">Disciplina deportiva</span></p>
-                                    <p style="margin:0 0 8px; font-size:14px;"><strong>Sede:</strong> <span th:text="${sede}">Sede asignada</span></p>
-                                    <p style="margin:0; font-size:14px;"><strong>Fecha de inscripción:</strong> <span th:text="${fechaInscripcion}">01/01/2025</span></p>
+                                    <p style="margin:0 0 8px; font-size:14px;">
+                                        <strong>Disciplina:</strong>
+                                        <span th:text="${disciplina}">
+                                            Disciplina deportiva
+                                        </span>
+                                    </p>
+                                    <p style="margin:0 0 8px; font-size:14px;">
+                                        <strong>Sede:</strong>
+                                        <span th:text="${sede}">
+                                            Sede asignada
+                                        </span>
+                                    </p>
+                                    <p style="margin:0; font-size:14px;">
+                                        <strong>Fecha de pre-inscripción:</strong>
+                                        <span th:text="${fechaInscripcion}">
+                                            01/01/2025
+                                        </span>
+                                    </p>
                                 </td>
                             </tr>
                         </table>
 
                         <p style="font-size:15px; line-height:1.6;">
-                            Próximamente recibirás información adicional sobre los horarios, entrenadores y recomendaciones
-                            para el inicio de tus actividades.
+                            Para completar el proceso, deberás presentar los documentos
+                            solicitados de manera <strong>presencial</strong> en la sede correspondiente,
+                            dentro de los horarios de atención establecidos.
                         </p>
 
                         <p style="font-size:15px; line-height:1.6;">
-                            Te damos la bienvenida y te deseamos muchos éxitos en esta nueva etapa.
+                            Una vez validada la documentación, se te confirmará
+                            oficialmente la inscripción y se te brindará información
+                            adicional sobre horarios y actividades.
                         </p>
 
                         <p style="font-size:15px; line-height:1.6; margin-bottom:0;">
@@ -66,16 +122,25 @@
 
                 <!-- Pie de página -->
                 <tr>
-                    <td style="background-color:#eeeeee; padding:15px; text-align:center; font-size:12px; color:#666666;">
-                        <p style="margin:0;">© <span th:text="${anio}">2025</span> ACADEMIA IPD – Instituto Peruano del Deporte</p>
-                        <p style="margin:5px 0 0;">Este es un mensaje automático, por favor no responder.</p>
+                    <td style="
+                        background-color:#f0eef6;
+                        padding:15px;
+                        text-align:center;
+                        font-size:12px;
+                        color:#6b5fa7;">
+
+                        <p style="margin:0;">
+                            © <span th:text="${anio}">2025</span>
+                            ACADEMIA IPD – Instituto Peruano del Deporte
+                        </p>
+                        <p style="margin:5px 0 0;">
+                            Este es un mensaje automático, por favor no responder.
+                        </p>
                     </td>
                 </tr>
+
             </table>
+
         </td>
     </tr>
-    ```
-
 </table>
-</body>
-</html>

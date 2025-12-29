@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.repository;
 import academiaapi.ipd.gob.pe.academiaapi.model.Listahorario;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface IListahorarioRepository extends IGenericRepo<Listahorario,Integ
             lh.horario.listadisciplina.sede.idSede = ?3
             """)
     List<Listahorario> findDisponibles(Integer edad, Integer idModalidad, Integer idSede);
+
 }

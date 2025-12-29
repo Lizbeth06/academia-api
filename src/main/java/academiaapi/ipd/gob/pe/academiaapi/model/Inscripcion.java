@@ -44,5 +44,5 @@ public class Inscripcion {
 
     @ManyToOne
     @JoinColumn(name = "id_apoderadoparticipante",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_APODERADOPARTICIPANTE"))
-    private Apoderadoparticipante Apoderadoparticipante;
+    private Apoderadoparticipante apoderadoparticipante;
 }
