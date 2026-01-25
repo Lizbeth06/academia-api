@@ -140,6 +140,11 @@ public class ListahorarioServiceImpl extends CRUDImpl<Listahorario, Integer> imp
 
     }
 
+    @Override
+    public List<Listahorario> findAllListahorario() {
+        return listahorarioRepository.listaTodohorario();
+    }
+
     public List<Listahorario> findDisponibles(Integer edad, Integer idModalidad, Integer idSede){
         return this.listahorarioRepository.findDisponibles(edad,idModalidad,idSede);
     }
