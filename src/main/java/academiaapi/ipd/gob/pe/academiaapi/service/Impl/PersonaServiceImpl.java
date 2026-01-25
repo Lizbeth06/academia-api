@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +36,10 @@ public class PersonaServiceImpl extends CRUDImpl<Persona,Integer> implements IPe
         persona.setTelefono(telefono);
 
         return personaRepository.save(persona);
+    }
+
+    @Override
+    public Optional<Persona> findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento) {
+        return this.personaRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento);
     }
 }

@@ -14,7 +14,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name ="tbl_persona")
+@Table(
+        name ="tbl_persona",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_persona_tipo_numero_documento",
+                        columnNames = {
+                                "id_tipo_documento",
+                                "num_documento"
+                        }
+                )
+        }
+)
 public class Persona {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -36,7 +47,7 @@ public class Persona {
     @Column(nullable = false)
     private Integer genero;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String correo;
 
     private String telefono;

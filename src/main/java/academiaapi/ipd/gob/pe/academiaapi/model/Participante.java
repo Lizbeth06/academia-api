@@ -13,18 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(
-        name = "tbl_participante",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "uk_apoderado_tipo_numero_documento",
-                        columnNames = {
-                                "id_tipo_documento",
-                                "num_documento"
-                        }
-                )
-        }
-)
+@Table(name = "tbl_participante")
 public class Participante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -32,28 +21,9 @@ public class Participante {
     private Integer idParticipante;
 
     @Column(nullable = false)
-    private String numDocumento;
-
-    @Column(nullable = false)
-    private String nombres;
-
-    @Column(nullable = false)
-    private String apaterno;
-
-    @Column(nullable = false)
-    private String amaterno;
-
-    @Column(nullable = false)
-    private Integer genero;
-
-    @Column(nullable = false)
-    private LocalDate fNacimiento;
-
-    @Column(nullable = false)
     private Boolean presentaDiscapacidad;
-
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_documento",foreignKey = @ForeignKey(name = "FK_PARTICIPANTE_TIPODOCUMENTO"))
-    private Tipodocumento tipodocumento;
-
+    
+    @OneToOne
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona persona;
 }

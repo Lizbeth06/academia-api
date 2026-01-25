@@ -22,6 +22,6 @@ public class ApoderadoServiceImpl extends CRUDImpl<Apoderado,Integer> implements
 
     @Override
     public Optional<Apoderado> findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento){
-        return this.apoderadoRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento);
+        return this.apoderadoRepository.findByPersona_Tipodocumento_IdTipoDocumentoAndPersona_NumDocumento(idTipoDocumento, numDocumento);
     };
 }
