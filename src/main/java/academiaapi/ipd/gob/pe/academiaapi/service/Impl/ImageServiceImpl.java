@@ -23,13 +23,13 @@ public class ImageServiceImpl implements IImageService {
     private Cloudinary cloudinary;
 
     @Override
-    public Map<String, String> upload(MultipartFile multipartFile) throws Exception {
+    public Map<String, String> upload(MultipartFile multipartFile, String folder) throws Exception {
 
         File f = convertToFile(multipartFile);
 
         Map<String, Object> response = cloudinary.uploader().upload(
                 f,
-                ObjectUtils.asMap("resource_type", "auto")
+                ObjectUtils.asMap("folder", folder,"resource_type", "auto")
         );
 
         JSONObject json = new JSONObject(response);
@@ -70,10 +70,10 @@ public class ImageServiceImpl implements IImageService {
     }
 
     private File convertToFile(MultipartFile multipartFile) throws Exception {
-        File file = new File(multipartFile.getOriginalFilename());
-        FileOutputStream outputStream = new FileOutputStream(file);
-        outputStream.write(multipartFile.getBytes());
-        outputStream.close();
+        File file = File.createTempFile("upload-", multipartFile.getOriginalFilename());
+        try (FileOutputStream outputStream = new FileOutputStream(file)) {
+            outputStream.write(multipartFile.getBytes());
+        }
         return file;
     }
 

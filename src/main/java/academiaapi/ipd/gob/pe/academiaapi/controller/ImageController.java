@@ -24,12 +24,12 @@ public class ImageController {
 
     @Operation(summary = "subir una imagen")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map<String, String>> uploadImage(
-            @RequestParam("file") MultipartFile multipartFile
+    public ResponseEntity<?> uploadImage(
+            @RequestParam("file") MultipartFile multipartFile,@RequestParam String folder
     ) throws Exception {
 
         return ResponseEntity.ok(
-                imageService.upload(multipartFile)
+                imageService.upload(multipartFile,folder)
         );
     }
 
