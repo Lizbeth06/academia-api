@@ -2424,10 +2424,10 @@ VALUES ('ÑAUPARI', 'HUARANCCA', 'YONNY.HUARANCCA@UNSCH.EDU.PE', NULL, NULL, 1, 
 
 INSERT INTO tbl_trabajador (bonificaciones, cargo, codigo_trabajador, fingreso, fsalida, horariotrabajo,
                                      metas, observaciones, salario, tipocontrato, id_nivel_educacion, id_oficina,
-                                    id_persona)
-VALUES (6000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','NINGUNO',6000,'CAS',1,1,1),
-       (4000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','NINGUNO',4000,'CAS',1,1,2),
-       (5000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','NINGUNO',5000,'CAS',1,1,3);
+                                    id_persona, is_active)
+VALUES (6000,'ANALISTA','0101','2025-03-28','2026-03-28','8:00AM','','NINGUNO',6000,'CAS',1,1,1,1),
+       (4000,'ANALISTA','0102','2025-03-28','2026-03-28','8:00AM','','NINGUNO',4000,'CAS',1,1,2,1),
+       (5000,'ANALISTA','0103','2025-03-28','2026-03-28','8:00AM','','NINGUNO',5000,'CAS',1,1,3,1);
 
 
 
@@ -3039,6 +3039,6 @@ INSERT INTO tbl_tiporelacion(descripcion) VALUES
 ('OTRO');
 
 --Datosde ejemplo relacionados con estados de inscripciones
-INSERT INTO tbl_estado(descripcion) VALUES
-('ACTIVO'),
-('INACTIVO');
+INSERT INTO tbl_tipoinscripcion(descripcion) VALUES
+('PREINSCRIPCION'),
+('INSCRIPCION');

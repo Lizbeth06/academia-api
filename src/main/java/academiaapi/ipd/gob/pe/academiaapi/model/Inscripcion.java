@@ -20,6 +20,8 @@ public class Inscripcion {
     @EqualsAndHashCode.Include
     private Integer idInscripcion;
 
+    private String estado;
+
     @Column(nullable = false)
     private LocalDate finscripcion;
 
@@ -30,9 +32,6 @@ public class Inscripcion {
     @JoinColumn(name = "id_listahorario",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_LISTAHORARIO"))
     private Listahorario listahorario;
 
-    @ManyToOne
-    @JoinColumn(name = "id_estado",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_ESTADO"))
-    private Estado estado;
 
     @ManyToOne
     @JoinColumn(name = "id_tiposeguro",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_TIPOSEGURO"))

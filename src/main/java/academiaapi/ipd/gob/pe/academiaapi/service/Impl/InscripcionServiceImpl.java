@@ -243,21 +243,6 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion,Integer> implem
                     })
                     .orElseGet(()->personaService.save(inscripcion.getApoderadoparticipante().getApoderado().getPersona()));
 
-//            Apoderado apoderadoFinal = apoderadoService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNumDocumento())
-//                    .map(apoderadoExistente->{
-//                        apoderadoExistente.getPersona().setNombres(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNombres());
-//                        apoderadoExistente.getPersona().setApaterno(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getApaterno());
-//                        apoderadoExistente.getPersona().setAmaterno(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getAmaterno());
-//                        apoderadoExistente.getPersona().setCorreo(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getCorreo());
-//                        apoderadoExistente.getPersona().setTelefono(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTelefono());
-//                        apoderadoExistente.getPersona().setDireccion(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getDireccion());
-//                        apoderadoExistente.getPersona().setGenero(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getGenero());
-//                        apoderadoExistente.getPersona().setFNacimiento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getFNacimiento());
-//                        apoderadoExistente.getPersona().setUbigeo(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getUbigeo());
-//                        return apoderadoExistente;
-//                    })
-//                    .orElseGet(()->apoderadoService.save(inscripcion.getApoderadoparticipante().getApoderado()));
-
             Apoderado apoderadoFinal = apoderadoService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNumDocumento())
                     .map(apoderadoExistente->{
                         apoderadoExistente.setPersona(personaApoderado);
@@ -324,6 +309,8 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion,Integer> implem
             });
 
             inscripcion.setApoderadoparticipante(apoParFinal);
+
+            inscripcion.setEstado("1");
 
         });
 

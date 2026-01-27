@@ -11,7 +11,7 @@ public interface IInscripcionRepository extends IGenericRepo<Inscripcion,Integer
                 FROM Inscripcion i
                 WHERE i.apoderadoparticipante.participante.idParticipante = :idParticipante AND
                 i.listahorario.convocatoria.temporada.idTemporada = :idTemporada AND
-                (i.estado.idEstado = 1 OR i.estado.idEstado = 2)
+                i.estado = '1'
             """)
     Boolean existeInscripcionActiva(
             @Param("idParticipante") Integer idParticipante,

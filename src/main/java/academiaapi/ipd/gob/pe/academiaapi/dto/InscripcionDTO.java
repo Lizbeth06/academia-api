@@ -29,7 +29,7 @@ public class InscripcionDTO {
 
     private ListahorarioDTO listahorario;
 
-    private EstadoDTO estado;
+    private String estado;
 
     private TiposeguroDTO tiposeguro;
 

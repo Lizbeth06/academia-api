@@ -39,13 +39,14 @@ public class TrabajadorDTO {
     @NotNull
     private Double salario;
 
+    @NotNull
+    private Integer isActive;
+
     private String metas;
 
     private String observaciones;
 
     private Double bonificaciones;
-
- 
 
     //Relaciones
     private PersonaDTO persona;
