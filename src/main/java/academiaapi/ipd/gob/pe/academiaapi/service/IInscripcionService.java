@@ -22,4 +22,5 @@ public interface IInscripcionService extends ICRUD<Inscripcion,Integer> {
     public List<Inscripcion> saveAll(List<Inscripcion> list);
     public List<Inscripcion> findAllById(List<Integer> ids);
     public void sendMail(Integer idInscripcion);
+    public void anularPreinscricpion(Integer idInscripcion);
 }

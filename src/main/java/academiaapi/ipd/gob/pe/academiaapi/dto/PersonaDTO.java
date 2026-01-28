@@ -36,7 +36,7 @@ public class PersonaDTO {
     @NotNull
     private Integer genero;
 
-    @NotNull
+//    @NotNull
     private String correo;
 
 

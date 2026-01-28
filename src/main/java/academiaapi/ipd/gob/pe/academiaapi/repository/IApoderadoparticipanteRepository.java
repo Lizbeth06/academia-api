@@ -8,7 +8,7 @@ import java.util.Optional;
 @Repository
 public interface IApoderadoparticipanteRepository extends IGenericRepo<Apoderadoparticipante,Integer>{
     Optional<Apoderadoparticipante> findByApoderado_IdApoderadoAndParticipante_IdParticipante(Integer idApoderado, Integer idParticipante);
-    Optional<Apoderadoparticipante> findByApoderado_tipodocumento_idTipoDocumentoAndApoderado_numDocumentoAndParticipante_tipodocumento_idTipoDocumentoAndParticipante_numDocumento(
+    Optional<Apoderadoparticipante> findByApoderado_Persona_Tipodocumento_IdTipoDocumentoAndApoderado_Persona_NumDocumentoAndParticipante_Persona_Tipodocumento_IdTipoDocumentoAndApoderado_Persona_NumDocumento(
             Integer idTipoDocApoderado,
             String numDocumentoApoderado,
             Integer idTipoDocParticipante,

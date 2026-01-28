@@ -23,6 +23,6 @@ public class ParticipanteServiceImpl extends CRUDImpl<Participante,Integer> impl
 
     @Override
     public Optional<Participante> findByIdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento){
-        return this.participanteRepository.findByTipodocumento_IdTipoDocumentoAndNumDocumento(idTipoDocumento, numDocumento);
+        return this.participanteRepository.findByPersona_Tipodocumento_IdTipoDocumentoAndPersona_NumDocumento(idTipoDocumento, numDocumento);
     };
 }

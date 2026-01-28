@@ -31,7 +31,7 @@ public class ApoderadoparticipanteServiceImpl extends CRUDImpl<Apoderadoparticip
             Integer idTipoDocParticipante,
             String numDocParticipante
     ){
-        return this.apoderadoparticipanteRepository.findByApoderado_tipodocumento_idTipoDocumentoAndApoderado_numDocumentoAndParticipante_tipodocumento_idTipoDocumentoAndParticipante_numDocumento(
+        return this.apoderadoparticipanteRepository.findByApoderado_Persona_Tipodocumento_IdTipoDocumentoAndApoderado_Persona_NumDocumentoAndParticipante_Persona_Tipodocumento_IdTipoDocumentoAndApoderado_Persona_NumDocumento(
                 idTipoDocApoderado,
                 numDocApoderado,
                 idTipoDocParticipante,

@@ -1,6 +1,9 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
+import academiaapi.ipd.gob.pe.academiaapi.dto.PersonaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.TrabajadorDTO;
+import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
+import academiaapi.ipd.gob.pe.academiaapi.model.Persona;
 import academiaapi.ipd.gob.pe.academiaapi.model.Trabajador;
 import academiaapi.ipd.gob.pe.academiaapi.service.ITrabajadorService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
@@ -35,16 +38,24 @@ public class TrabajadorController {
     @Operation(summary = "Lista un trabajador")
     @GetMapping("/{id}")
     public ResponseEntity<TrabajadorDTO> findById(@PathVariable Integer id){
-        Trabajador obj=trabajadorService.findById(id);
+        Trabajador obj=trabajadorService.findByIdIcludeInactive(id);
         return ResponseEntity.ok().body(mapperUtil.map(obj, TrabajadorDTO.class));
     }
 
-
+    @Operation(summary = "Lista un trabajador por tipo de documento y numero de documento")
+    @GetMapping("/documento")
+    public ResponseEntity<TrabajadorDTO> findByDocumento(
+            @RequestParam(required = true) Integer idTipodocumento,
+            @RequestParam(required = true) String numDocumento
+    ) {
+        Trabajador obj = trabajadorService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("TRABAJADOR NO ENCONTRADO"));;
+        return ResponseEntity.ok(mapperUtil.map(obj, TrabajadorDTO.class));
+    }
 
     @Operation(summary = "Agrega un trabajador")
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody TrabajadorDTO dto){
-        Trabajador obj=trabajadorService.save(mapperUtil.map(dto, Trabajador.class));
+        Trabajador obj=trabajadorService.saveTrabajador(mapperUtil.map(dto, Trabajador.class));
         URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdTrabajador()).toUri();
         return ResponseEntity.created(location).build();
     }
@@ -53,17 +64,15 @@ public class TrabajadorController {
     @PutMapping("/{id}")
     public ResponseEntity<TrabajadorDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody TrabajadorDTO dto){
         dto.setIdTrabajador(id);
-        Trabajador obj=trabajadorService.update(id, mapperUtil.map(dto, Trabajador.class));
+        Trabajador obj=trabajadorService.updateTrabajador(id, mapperUtil.map(dto, Trabajador.class));
         return ResponseEntity.ok(mapperUtil.map(obj, TrabajadorDTO.class));
     }
 
     @Operation(summary = "Elimina un trabajador")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
-        trabajadorService.delete(id);
+        trabajadorService.deleteTrabajador(id);
         return ResponseEntity.noContent().build();
     }
-
-
 
 }

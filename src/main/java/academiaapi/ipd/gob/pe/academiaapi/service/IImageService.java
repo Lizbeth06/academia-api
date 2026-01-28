@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface IImageService {
 
-    Map<String, String> upload(MultipartFile multipartFile) throws Exception;
+    Map<String, String> upload(MultipartFile multipartFile, String folder) throws Exception;
 
     Map<String, String> update(MultipartFile multipartFile, String publicId) throws Exception;
 }

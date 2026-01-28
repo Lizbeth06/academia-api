@@ -1,7 +1,10 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
+import academiaapi.ipd.gob.pe.academiaapi.dto.ApoderadoDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.PersonaDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.UbigeoDTO;
+import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
+import academiaapi.ipd.gob.pe.academiaapi.model.Apoderado;
 import academiaapi.ipd.gob.pe.academiaapi.model.Persona;
 import academiaapi.ipd.gob.pe.academiaapi.service.IPersonaService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
@@ -39,7 +42,15 @@ public class PersonaController {
         return ResponseEntity.ok(mapperUtil.map(obj, PersonaDTO.class));
     }
 
-
+    @Operation(summary = "Lista una persona por tipo de documento y numero de documento")
+    @GetMapping("/documento")
+    public ResponseEntity<PersonaDTO> findByDocumento(
+            @RequestParam(required = true) Integer idTipodocumento,
+            @RequestParam(required = true) String numDocumento
+    ) {
+        Persona obj = personaService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("APODERADO NO ENCONTRADO"));;
+        return ResponseEntity.ok(mapperUtil.map(obj, PersonaDTO.class));
+    }
 
     @Operation(summary = "Agrega una persona")
     @PostMapping

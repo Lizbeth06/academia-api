@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "tbl_usuario")
+@SQLDelete(sql = "UPDATE tbl_usuario SET is_active = 0 WHERE id_usuario = ?")
+@Where(clause = "is_active = 1")
 public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -27,7 +31,7 @@ public class Usuario {
     private LocalDateTime fRegistro;
 
     @Column(nullable = false)
-    private Integer isActive;
+    private Integer isActive = 1;
 
     @Column(nullable = false)
     private String password;

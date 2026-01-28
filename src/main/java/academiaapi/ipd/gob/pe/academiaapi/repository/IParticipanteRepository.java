@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface IParticipanteRepository extends IGenericRepo<Participante,Integer>{
-    Optional<Participante> findByTipodocumento_IdTipoDocumentoAndNumDocumento(Integer idTipoDocumento, String numDocumento);
+    Optional<Participante> findByPersona_Tipodocumento_IdTipoDocumentoAndPersona_NumDocumento(Integer idTipoDocumento, String numDocumento);
 }

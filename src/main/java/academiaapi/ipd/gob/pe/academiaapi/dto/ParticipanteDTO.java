@@ -11,12 +11,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ParticipanteDTO {
     private Integer idParticipante;
-    private String numDocumento;
-    private String nombres;
-    private String apaterno;
-    private String amaterno;
-    private Integer genero;
-    private LocalDate fNacimiento;
     private Boolean presentaDiscapacidad;
-    private TipodocumentoDTO tipodocumento;
+    private PersonaDTO persona;
 }
