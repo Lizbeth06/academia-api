@@ -28,6 +28,9 @@ public class Inscripcion {
     @Column(nullable = false)
     private String observacion;
 
+    @Column(nullable = false)
+    private String numRegistro;
+
     @ManyToOne
     @JoinColumn(name = "id_listahorario",foreignKey = @ForeignKey(name = "FK_INSCRIPCION_LISTAHORARIO"))
     private Listahorario listahorario;

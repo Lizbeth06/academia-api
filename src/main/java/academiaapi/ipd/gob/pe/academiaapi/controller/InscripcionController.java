@@ -85,6 +85,15 @@ public class InscripcionController {
         return ResponseEntity.noContent().build();
     }
 
+
+    @Operation(summary = "Anula pre-inscripción")
+    @DeleteMapping("/{id}/delete-preinscripcion")
+    public ResponseEntity<Void> anularPreinscripcion(@PathVariable("id") Integer idInscripcion) {
+        inscripcionService.anularPreinscricpion(idInscripcion);
+        return ResponseEntity.noContent().build();
+    }
+
+
     @Operation(summary = "Muestra un archivo pdf en la ficha de preinscripción")
     @GetMapping(value = "/{id}/ficha-preinscripcion", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> generarFichaPreinscripcion(@PathVariable("id") Integer idInscripcion) throws Exception{

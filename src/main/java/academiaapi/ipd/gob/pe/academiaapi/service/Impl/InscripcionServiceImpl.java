@@ -1,8 +1,11 @@
 package academiaapi.ipd.gob.pe.academiaapi.service.Impl;
 
+import academiaapi.ipd.gob.pe.academiaapi.common.result.DetailError;
+import academiaapi.ipd.gob.pe.academiaapi.common.result.FailureResult;
 import academiaapi.ipd.gob.pe.academiaapi.dto.AttachmentDTO;
 import academiaapi.ipd.gob.pe.academiaapi.exception.InscriptionLimitReachedException;
 import academiaapi.ipd.gob.pe.academiaapi.exception.ParticipanteYaInscritoException;
+import academiaapi.ipd.gob.pe.academiaapi.exception.ResourceNotFoundException;
 import academiaapi.ipd.gob.pe.academiaapi.model.*;
 import academiaapi.ipd.gob.pe.academiaapi.repository.IHorarioRepository;
 import academiaapi.ipd.gob.pe.academiaapi.repository.IInscripcionRepository;
@@ -97,7 +100,7 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion,Integer> implem
         );
         String fecha = inscripcion.getFinscripcion().format(formatoFechaLarga);
 
-        String codigo = String.format("%06d",inscripcion.getIdInscripcion());
+        String codigo = inscripcion.getNumRegistro();
 
         parameters.put("temporada", temporada);
         parameters.put("nombres", nombres);
@@ -213,7 +216,7 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion,Integer> implem
         list.forEach(inscripcion -> {
             // TODO: Validar si la fecha de inscripciön ya venció.
 
-            // TODO: Validar si el horarario aún cuenta con vacantes e incrementar el contador en caso contrario;
+            // TODO: Validar si el horario aún cuenta con vacantes e incrementar el contador en caso contrario;
             Listahorario listahorario = this.listahorarioService.findById(inscripcion.getListahorario().getIdListahorario());
             Horario horario = this.horarioRepository.findByIdForUpdate(listahorario.getHorario().getIdHorario())
                     .orElseThrow(()->new EntityNotFoundException("Horario no encontrado"));
@@ -310,6 +313,8 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion,Integer> implem
 
             inscripcion.setApoderadoparticipante(apoParFinal);
 
+            inscripcion.setNumRegistro(String.format("%06d",inscripcion.getIdInscripcion()));
+
             inscripcion.setEstado("1");
 
         });
@@ -379,7 +384,16 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion,Integer> implem
                 e.printStackTrace(); // o usa logger
             }
         }
+
     }
 
+    @Override
+    public void anularPreinscricpion(Integer idInscripcion) {
+        Inscripcion inscripcion = inscripcionRepository.findById(idInscripcion)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Inscripción no encontrada"));
 
+        inscripcion.setEstado("0");
+        inscripcionRepository.save(inscripcion);
+    }
 }

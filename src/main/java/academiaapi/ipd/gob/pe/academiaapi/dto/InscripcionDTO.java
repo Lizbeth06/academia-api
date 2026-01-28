@@ -27,6 +27,8 @@ public class InscripcionDTO {
 
     private String observacion;
 
+    private String numRegistro;
+
     private ListahorarioDTO listahorario;
 
     private String estado;
