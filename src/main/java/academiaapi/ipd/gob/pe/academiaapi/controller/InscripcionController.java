@@ -28,7 +28,7 @@ public class InscripcionController {
     private final IInscripcionService inscripcionService;
     private final MapperUtil mapperUtil;
 
-    @Operation(summary = "Lista toda la inacripción")
+    @Operation(summary = "Lista toda la inscripción")
     @GetMapping
     public ResponseEntity<List<InscripcionDTO>> findAll() {
         List<InscripcionDTO> list = mapperUtil.mapList(inscripcionService.findAll(), InscripcionDTO.class);
@@ -70,7 +70,7 @@ public class InscripcionController {
         return ResponseEntity.created(location).build();
     }
 
-    @Operation(summary = "Actuliza la inscripción")
+    @Operation(summary = "Actualiza la inscripción")
     @PutMapping("/{id}")
     public ResponseEntity<InscripcionDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody InscripcionDTO dto) {
         dto.setIdInscripcion(id);
@@ -85,7 +85,7 @@ public class InscripcionController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Muestra un archivo pdf on la ficha de preinscripción")
+    @Operation(summary = "Muestra un archivo pdf en la ficha de preinscripción")
     @GetMapping(value = "/{id}/ficha-preinscripcion", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> generarFichaPreinscripcion(@PathVariable("id") Integer idInscripcion) throws Exception{
         byte[] data = inscripcionService.generarFichaPreinscripcion(idInscripcion);
