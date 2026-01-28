@@ -15,4 +15,7 @@ spring:
             enable: true
             required: true
     protocol: smtp
-    test-connection: false
+    test-connection: false;
+
+recaptcha:
+  secret: 6Les40ssAAAAAMsTFQuz_Z_17HVK166wDKthoM27

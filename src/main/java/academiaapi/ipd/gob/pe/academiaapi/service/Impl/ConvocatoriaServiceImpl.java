@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ConvocatoriaServiceImpl extends CRUDImpl<Convocatoria,Integer> implements IConvocatoriaService {
+public class ConvocatoriaServiceImpl extends CRUDImpl<Convocatoria, Integer> implements IConvocatoriaService {
 
     private final IConvocatoriaRepository convocatoriaRepository;
     private final IListahorarioRepository listahorarioRepository;
@@ -155,32 +155,10 @@ public class ConvocatoriaServiceImpl extends CRUDImpl<Convocatoria,Integer> impl
         dto.setEstado(entity.getEstado());
 
         // Sede
-        SedeDTO sedeDTO = new SedeDTO();
-        sedeDTO.setIdSede(entity.getSede().getIdSede());
-        sedeDTO.setNombre(entity.getSede().getNombre());
-        sedeDTO.setCodubi(entity.getSede().getCodubi());
-        sedeDTO.setDireccion(entity.getSede().getDireccion());
-        sedeDTO.setCapacidad(entity.getSede().getCapacidad());
-        sedeDTO.setUbicacion(entity.getSede().getUbicacion());
-        sedeDTO.setLatitud(entity.getSede().getLatitud());
-        sedeDTO.setLongitud(entity.getSede().getLongitud());
-        sedeDTO.setEstado(entity.getSede().getEstado());
-        SectorDTO sectorDTO = new SectorDTO();
-        sectorDTO.setIdSector(entity.getSede().getSector().getIdSector());
-        sectorDTO.setDescripcion(entity.getSede().getSector().getDescripcion());
-        sedeDTO.setSector(sectorDTO);
-        dto.setSede(sedeDTO);
+        dto.setSede(mapSedeToDTO(entity.getSede()));
 
         // Disciplina
-        DisciplinaDTO discDTO = new DisciplinaDTO();
-        discDTO.setIdDisciplina(entity.getDisciplina().getIdDisciplina());
-        discDTO.setCodigo(entity.getDisciplina().getCodigo());
-        discDTO.setDescripcion(entity.getDisciplina().getDescripcion());
-        discDTO.setEdadDeporte(entity.getDisciplina().getEdadDeporte());
-        discDTO.setEdadParadeporte(entity.getDisciplina().getEdadParadeporte());
-        discDTO.setEstado(entity.getEstado());
-        discDTO.setFRegistro(entity.getDisciplina().getFRegistro());
-        dto.setDisciplina(discDTO);
+        dto.setDisciplina(mapDisciplinaToDTO(entity.getDisciplina()));
 
         return dto;
     }
@@ -207,6 +185,38 @@ public class ConvocatoriaServiceImpl extends CRUDImpl<Convocatoria,Integer> impl
         dto.setIdNivel(entity.getIdNivel());
         dto.setCodigo(entity.getCodigo());
         dto.setDescripcion(entity.getDescripcion());
+        return dto;
+    }
+
+    private DisciplinaDTO mapDisciplinaToDTO(Disciplina entity) {
+        DisciplinaDTO dto = new DisciplinaDTO();
+        dto.setIdDisciplina(entity.getIdDisciplina());
+        dto.setCodigo(entity.getCodigo());
+        dto.setDescripcion(entity.getDescripcion());
+        dto.setEdadDeporte(entity.getEdadDeporte());
+        dto.setEstado(entity.getEstado());
+        dto.setEdadParadeporte(entity.getEdadParadeporte());
+        dto.setFRegistro(entity.getFRegistro());
+        dto.setDefinicion(entity.getDefinicion());
+        dto.setEstado(entity.getEstado());
+        return dto;
+    }
+
+    private SedeDTO mapSedeToDTO(Sede entity) {
+        SedeDTO dto = new SedeDTO();
+        dto.setIdSede(entity.getIdSede());
+        dto.setNombre(entity.getNombre());
+        dto.setCodubi(entity.getCodubi());
+        dto.setDireccion(entity.getDireccion());
+        dto.setCapacidad(entity.getCapacidad());
+        dto.setUbicacion(entity.getUbicacion());
+        dto.setLatitud(entity.getLatitud());
+        dto.setLongitud(entity.getLongitud());
+        dto.setEstado(entity.getEstado());
+        SectorDTO sectorDTO = new SectorDTO();
+        sectorDTO.setIdSector(entity.getSector().getIdSector());
+        sectorDTO.setDescripcion(entity.getSector().getDescripcion());
+        dto.setSector(sectorDTO);
         return dto;
     }
 
@@ -253,4 +263,45 @@ public class ConvocatoriaServiceImpl extends CRUDImpl<Convocatoria,Integer> impl
         return response;
     }
 
+    @Override
+    public List<ListaConvocatoriaDisciplinaSedeDTO> listaPorDisciplina() {
+        List<Listahorario> listahorarios = listahorarioRepository.listaTodohorario();
+        if (listahorarios.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Map<String, List<Listahorario>> grouped = listahorarios.stream()
+                .collect(Collectors.groupingBy(
+                        lh -> lh.getConvocatoria().getIdConvocatoria() + "-" +
+                                lh.getHorario().getListadisciplina().getDisciplina().getIdDisciplina() + "-" +
+                                lh.getHorario().getListadisciplina().getSede().getIdSede()
+                ));
+        List<ListaConvocatoriaDisciplinaSedeDTO> response = new ArrayList<>();
+
+        for (Map.Entry<String, List<Listahorario>> entry : grouped.entrySet()) {
+            List<Listahorario> horarios = entry.getValue();
+            Listahorario primeraLista = horarios.get(0);
+
+            ConvocatoriaDTO convocatoriaDTO = mapConvocatoriaToDTO(primeraLista.getConvocatoria());
+            DisciplinaDTO disciplinaDTO = mapDisciplinaToDTO(primeraLista.getHorario().getListadisciplina().getDisciplina());
+            SedeDTO sedeDTO = mapSedeToDTO(primeraLista.getHorario().getListadisciplina().getSede());
+            List<HorarioDTO> listaHorarioDTO = horarios.stream()
+                    .map(lh -> {
+                        HorarioDTO dto = mapHorarioToDTO(lh.getHorario());
+                        dto.setListadisciplina(null);
+                        return dto;
+                    })
+                    .toList();
+
+            // DTO final
+            ListaConvocatoriaDisciplinaSedeDTO bloque = new ListaConvocatoriaDisciplinaSedeDTO();
+            bloque.setConvocatoria(convocatoriaDTO);
+            bloque.setDisciplina(disciplinaDTO);
+            bloque.setSede(sedeDTO);
+            bloque.setHorario(listaHorarioDTO);
+
+            response.add(bloque);
+        }
+
+        return response;
+    }
 }

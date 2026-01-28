@@ -27,6 +27,8 @@ public class DisciplinaDTO {
     @NotBlank
     private String edadParadeporte;
 
+    private String definicion;
+
     @NotNull
     private String estado;
 

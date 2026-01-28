@@ -1,6 +1,7 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
 import academiaapi.ipd.gob.pe.academiaapi.dto.ConvocatoriaDTO;
+import academiaapi.ipd.gob.pe.academiaapi.dto.ListaConvocatoriaDisciplinaSedeDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ListahorariobloqueDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Convocatoria;
 import academiaapi.ipd.gob.pe.academiaapi.service.IImageService;
@@ -56,6 +57,15 @@ public class ConvocatoriaController {
     public ResponseEntity<List<ListahorariobloqueDTO>> listaTotal() {
 
         List<ListahorariobloqueDTO> lista = convocatoriaService.listaTotal();
+
+        return ResponseEntity.ok(lista);
+    }
+
+    @Operation(summary = "Lista por disciplina")
+    @GetMapping("/listapordisciplina")
+    public ResponseEntity<List<ListaConvocatoriaDisciplinaSedeDTO>> listaporDisciplina() {
+
+        List<ListaConvocatoriaDisciplinaSedeDTO> lista = convocatoriaService.listaPorDisciplina();
 
         return ResponseEntity.ok(lista);
     }

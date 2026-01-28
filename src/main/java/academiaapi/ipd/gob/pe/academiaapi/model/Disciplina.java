@@ -35,6 +35,8 @@ public class Disciplina {
     @Column(nullable = false)
     private LocalDate fRegistro;
 
+    private String definicion;
+
     @Column(nullable = false)
     private String estado;
 
