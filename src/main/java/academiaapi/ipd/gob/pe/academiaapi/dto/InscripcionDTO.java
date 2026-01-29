@@ -27,10 +27,12 @@ public class InscripcionDTO {
 
     private String observacion;
 
+    @NotNull
     private String numRegistro;
 
     private ListahorarioDTO listahorario;
 
+    @NotNull
     private String estado;
 
     private TiposeguroDTO tiposeguro;

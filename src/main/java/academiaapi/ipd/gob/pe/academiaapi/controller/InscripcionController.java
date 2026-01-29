@@ -86,7 +86,7 @@ public class InscripcionController {
     }
 
 
-    @Operation(summary = "Anula pre-inscripción")
+    @Operation(summary = "Anular pre-inscripción")
     @DeleteMapping("/{id}/delete-preinscripcion")
     public ResponseEntity<Void> anularPreinscripcion(@PathVariable("id") Integer idInscripcion) {
         inscripcionService.anularPreinscricpion(idInscripcion);

@@ -22,16 +22,19 @@ public class Validacioninscripcion {
     private Integer idValidacioninscripcion;
 
     @Column(nullable = false)
-    private LocalDateTime fvalidacion;
+    private String usuariocrea;
 
     @Column(nullable = false)
-    private LocalDateTime fmodificacion;
+    private LocalDateTime fechacreada;
+
+    private String usuariomodifica;
+
+    private LocalDateTime fechamodificada;
+
+    @Column(nullable = false)
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_inscripcion",foreignKey = @ForeignKey(name = "FK_VALIDACIONINSCRIPCION_INSCRIPCION"))
     private Inscripcion inscripcion;
-
-    @ManyToOne
-    @JoinColumn(name = "id_usuario",foreignKey = @ForeignKey(name = "FK_VALIDACIONINSCRIPCION_USUARIO"))
-    private Usuario usuario;
 }

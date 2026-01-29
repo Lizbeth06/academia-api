@@ -34,7 +34,7 @@ public class PersonaDTO {
     private String amaterno;
 
     @NotNull
-    private Integer genero;
+    private String genero;
 
 //    @NotNull
     private String correo;

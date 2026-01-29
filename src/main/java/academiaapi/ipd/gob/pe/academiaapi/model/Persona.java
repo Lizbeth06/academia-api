@@ -45,7 +45,7 @@ public class Persona {
     private String amaterno;
 
     @Column(nullable = false)
-    private Integer genero;
+    private String genero;
 
 //    @Column(nullable = false)
     private String correo;

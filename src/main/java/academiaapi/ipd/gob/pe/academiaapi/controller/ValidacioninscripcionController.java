@@ -35,7 +35,8 @@ public class ValidacioninscripcionController {
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody ValidacioninscripcionDTO dto) {
-        Validacioninscripcion obj = validacioninscripcionService.save(mapperUtil.map(dto, Validacioninscripcion.class));
+        Validacioninscripcion obj = validacioninscripcionService.crearNuevo(dto);
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdValidacioninscripcion()).toUri();
         return ResponseEntity.created(location).build();
     }

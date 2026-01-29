@@ -20,12 +20,17 @@ public class ValidacioninscripcionDTO {
     private Integer idValidacioninscripcion;
 
     @NotNull
-    private LocalDateTime fvalidacion;
+    private String usuariocrea;
 
     @NotNull
-    private LocalDateTime fmodificacion;
+    private LocalDateTime fechacreada;
+
+    private String usuariomodifica;
+
+    private LocalDateTime fechamodificada;
+
+    @NotNull
+    private String estado;
 
     private InscripcionDTO inscripcion;
-
-    private UsuarioDTO usuario;
 }
