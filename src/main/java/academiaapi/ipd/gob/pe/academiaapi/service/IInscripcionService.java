@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface IInscripcionService extends ICRUD<Inscripcion,Integer> {
+    public byte[] generarExcel(List<Inscripcion> preinscritos) throws  Exception;
     public byte[] generarFichaPreinscripcion(Integer idInscripcion) throws Exception;
     public byte[] generarDeclaracionJurada (Integer idInscripcion) throws Exception;
     public byte[] generarCarnetDigital (Integer idInscripcion) throws Exception;

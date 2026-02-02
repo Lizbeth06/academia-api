@@ -4,6 +4,8 @@ import academiaapi.ipd.gob.pe.academiaapi.dto.ValidacioninscripcionDTO;
 import academiaapi.ipd.gob.pe.academiaapi.model.Validacioninscripcion;
 import academiaapi.ipd.gob.pe.academiaapi.service.IValidacioninscripcionService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/validacioninscripcion")
 @RequiredArgsConstructor
+@Tag(name = "tbl_validacion")
 public class ValidacioninscripcionController {
     private final IValidacioninscripcionService validacioninscripcionService;
     private final MapperUtil mapperUtil;
@@ -33,6 +36,7 @@ public class ValidacioninscripcionController {
         return ResponseEntity.ok(mapperUtil.map(obj, ValidacioninscripcionDTO.class));
     }
 
+    @Operation(summary = "Crear nuevo inscrito")
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody ValidacioninscripcionDTO dto) {
         Validacioninscripcion obj = validacioninscripcionService.crearNuevo(dto);

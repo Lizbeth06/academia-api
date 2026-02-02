@@ -1,31 +1,49 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
-import academiaapi.ipd.gob.pe.academiaapi.service.IReporteService;
+import academiaapi.ipd.gob.pe.academiaapi.model.Inscripcion;
+import academiaapi.ipd.gob.pe.academiaapi.service.IInscripcionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/api/excel")
+@RequestMapping("/api/reportes-excel")
 @RequiredArgsConstructor
-@Tag(name = "tbl_inscripcion")
+@Tag(name = "Reportes_excel")
 public class ReporteExcelController {
-    private final IReporteService reporteService;
+    private final IInscripcionService inscripcionService;
 
     @Operation(summary = "Reporte de preinscritos")
-    @GetMapping("/{id}")
-    public ResponseEntity<byte[]> descargarExcel(@PathVariable Integer id) throws Exception {
+    @GetMapping("/preinscritos/excel")
+    public ResponseEntity<byte[]> descargarExcelPreinscritos() throws Exception {
 
-        byte[] excel = reporteService.generarReportePreinscritos(id);
+        List<Inscripcion> preinscritos = inscripcionService.findAll();
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte-estudiante.xlsx")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+        byte[] excel = inscripcionService.generarExcel(preinscritos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(
+                MediaType.parseMediaType(
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+        );
+        headers.setContentDisposition(
+                ContentDisposition.builder("attachment")
+                        .filename("reporte_preinscritos.xlsx")
+                        .build()
+        );
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
                 .body(excel);
     }
 

@@ -3040,5 +3040,5 @@ INSERT INTO tbl_tiporelacion(descripcion) VALUES
 
 --Datosde ejemplo relacionados con estados de inscripciones
 INSERT INTO tbl_tipoinscripcion(descripcion) VALUES
-('PREINSCRIPCION'),
-('INSCRIPCION');
+('PREINSCRITO'),
+('INSCRITO');
