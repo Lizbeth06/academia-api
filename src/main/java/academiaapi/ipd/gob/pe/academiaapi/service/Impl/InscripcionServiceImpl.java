@@ -1,7 +1,5 @@
 package academiaapi.ipd.gob.pe.academiaapi.service.Impl;
 
-import academiaapi.ipd.gob.pe.academiaapi.common.result.DetailError;
-import academiaapi.ipd.gob.pe.academiaapi.common.result.FailureResult;
 import academiaapi.ipd.gob.pe.academiaapi.dto.AttachmentDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.InscripcionReporteDTO;
 import academiaapi.ipd.gob.pe.academiaapi.exception.InscriptionLimitReachedException;
@@ -28,7 +26,6 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +48,7 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
     //Servicios
     private final IApoderadoService apoderadoService;
     private final IParticipanteService participanteService;
+    private final IConvocatoriaService convocatoriaService;
     private final IApoderadoparticipanteService apoderadoparticipanteService;
     private final IListadiaService listadiaService;
     private final IListahorarioService listahorarioService;
@@ -71,51 +69,31 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
         byte[] data = null;
         Map<String, Object> parameters = new HashMap<>();
         InputStream logo = getClass().getClassLoader().getResourceAsStream("images/logo.png");
-        List<InscripcionReporteDTO> listaReporte = preinscritos.stream()
-                .map(i -> {
-                    InscripcionReporteDTO dto = new InscripcionReporteDTO();
+        List<InscripcionReporteDTO> listaReporte = preinscritos.stream().map(i -> {
+            InscripcionReporteDTO dto = new InscripcionReporteDTO();
 
-                    dto.setNumRegistro(i.getNumRegistro());
+            dto.setNumRegistro(i.getNumRegistro());
 
-                    dto.setNombres(
-                            i.getApoderadoparticipante().getParticipante()
-                                    .getPersona()
-                                    .getApaterno() + " " +
-                                    i.getApoderadoparticipante().getParticipante()
-                                            .getPersona()
-                                            .getAmaterno() + " " +
-                                    i.getApoderadoparticipante().getParticipante()
-                                            .getPersona()
-                                            .getNombres()
+            dto.setNombres(i.getApoderadoparticipante().getParticipante().getPersona().getApaterno() + " " + i.getApoderadoparticipante().getParticipante().getPersona().getAmaterno() + " " + i.getApoderadoparticipante().getParticipante().getPersona().getNombres()
 
 
-                    );
+            );
 
-                    dto.setDeporte(i.getListahorario().getHorario().getListadisciplina()
-                            .getDisciplina().getDescripcion());
+            dto.setDeporte(i.getListahorario().getHorario().getListadisciplina().getDisciplina().getDescripcion());
 
-                    dto.setModalidad(i.getListahorario().getHorario().getModalidad()
-                            .getDescripcion());
+            dto.setModalidad(i.getListahorario().getHorario().getModalidad().getDescripcion());
 
-                    dto.setEtapa(i.getListahorario().getHorario().getNivel()
-                            .getDescripcion());
+            dto.setEtapa(i.getListahorario().getHorario().getNivel().getDescripcion());
 
-                    dto.setComplejo(i.getListahorario().getHorario().getListadisciplina()
-                            .getSede().getNombre());
+            dto.setComplejo(i.getListahorario().getHorario().getListadisciplina().getSede().getNombre());
 
-                    Integer edad = Period.between(
-                            i.getApoderadoparticipante()
-                                    .getParticipante()
-                                    .getPersona()
-                                    .getFNacimiento(),
-                            LocalDate.now()
-                    ).getYears();
+            Integer edad = Period.between(i.getApoderadoparticipante().getParticipante().getPersona().getFNacimiento(), LocalDate.now()).getYears();
 
-                    dto.setEdad(edad);
+            dto.setEdad(edad);
 
-                    dto.setEstado(i.getEstado().equals("1") ? "PENDIENTE" : i.getEstado().equals("2") ? "INSCRITO" : "ANULADO");
-                    return dto;
-                }).collect(Collectors.toList());
+            dto.setEstado(i.getEstado().equals("1") ? "PENDIENTE" : i.getEstado().equals("2") ? "INSCRITO" : "ANULADO");
+            return dto;
+        }).collect(Collectors.toList());
 
         parameters.put("logo", logo);
         parameters.put("ds", new JRBeanCollectionDataSource(listaReporte));
@@ -128,12 +106,9 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
 
         JRXlsxExporter exporter = new JRXlsxExporter();
         exporter.setExporterInput(new SimpleExporterInput(print));
-        exporter.setExporterOutput(
-                new SimpleOutputStreamExporterOutput(out)
-        );
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
 
-        SimpleXlsxReportConfiguration config =
-                new SimpleXlsxReportConfiguration();
+        SimpleXlsxReportConfiguration config = new SimpleXlsxReportConfiguration();
         config.setDetectCellType(true);
         config.setRemoveEmptySpaceBetweenRows(true);
         config.setWhitePageBackground(false);
@@ -171,19 +146,9 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
         String disciplinaDeportiva = inscripcion.getListahorario().getHorario().getListadisciplina().getDisciplina().getDescripcion();
         String modalidad = inscripcion.getListahorario().getHorario().getModalidad().getDescripcion();
         String etapa = inscripcion.getListahorario().getHorario().getNivel().getDescripcion();
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern(
-                "hh:mm a",
-                new Locale("es", "PE")
-        );
-        String horarios = listaDias
-                .stream().map(d -> d.getDias().getDescripcion().substring(0, 3))
-                .collect(Collectors.joining(" - ")) + " de " +
-                inscripcion.getListahorario().getHorario().getTurno().getHorainicio().format(formatoHora) + " a " +
-                inscripcion.getListahorario().getHorario().getTurno().getHorafin().format(formatoHora);
-        DateTimeFormatter formatoFechaLarga = DateTimeFormatter.ofPattern(
-                "dd 'de' MMMM 'del' yyyy",
-                new Locale("es", "PE")
-        );
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("hh:mm a", new Locale("es", "PE"));
+        String horarios = listaDias.stream().map(d -> d.getDias().getDescripcion().substring(0, 3)).collect(Collectors.joining(" - ")) + " de " + inscripcion.getListahorario().getHorario().getTurno().getHorainicio().format(formatoHora) + " a " + inscripcion.getListahorario().getHorario().getTurno().getHorafin().format(formatoHora);
+        DateTimeFormatter formatoFechaLarga = DateTimeFormatter.ofPattern("dd 'de' MMMM 'del' yyyy", new Locale("es", "PE"));
         String fecha = inscripcion.getFinscripcion().format(formatoFechaLarga);
 
         String codigo = inscripcion.getNumRegistro();
@@ -220,20 +185,12 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
 
         Inscripcion inscripcion = this.findById(idInscripcion);
 
-        String participante = inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + ' '
-                + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno() + ' '
-                + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno();
-        String tipoDocParticipante = inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTipodocumento().getIdTipoDocumento() == 1 ?
-                "DNI" :
-                "CE";
+        String participante = inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + ' ' + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno() + ' ' + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno();
+        String tipoDocParticipante = inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTipodocumento().getIdTipoDocumento() == 1 ? "DNI" : "CE";
         String numDocParticipante = inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNumDocumento();
 
-        String apoderado = inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNombres() + ' '
-                + inscripcion.getApoderadoparticipante().getApoderado().getPersona().getApaterno() + ' '
-                + inscripcion.getApoderadoparticipante().getApoderado().getPersona().getAmaterno();
-        String tipoDocApoderado = inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento() == 1 ?
-                "Documento Nacional de Identidad" :
-                "Carné de extranjería";
+        String apoderado = inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNombres() + ' ' + inscripcion.getApoderadoparticipante().getApoderado().getPersona().getApaterno() + ' ' + inscripcion.getApoderadoparticipante().getApoderado().getPersona().getAmaterno();
+        String tipoDocApoderado = inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento() == 1 ? "Documento Nacional de Identidad" : "Carné de extranjería";
         String numDocApoderado = inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNumDocumento();
 
         String telefono = inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTelefono();
@@ -244,10 +201,7 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
 
         String complejo = inscripcion.getListahorario().getHorario().getListadisciplina().getSede().getNombre();
 
-        DateTimeFormatter formatoFechaLarga = DateTimeFormatter.ofPattern(
-                "dd 'de' MMMM 'del' yyyy",
-                new Locale("es", "PE")
-        );
+        DateTimeFormatter formatoFechaLarga = DateTimeFormatter.ofPattern("dd 'de' MMMM 'del' yyyy", new Locale("es", "PE"));
         String fecha = inscripcion.getFinscripcion().format(formatoFechaLarga);
 
         Map<String, Object> parameters = new HashMap<>();
@@ -306,90 +260,78 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
 
             // TODO: Validar si el horario aún cuenta con vacantes e incrementar el contador en caso contrario;
             Listahorario listahorario = this.listahorarioService.findById(inscripcion.getListahorario().getIdListahorario());
-            Horario horario = this.horarioRepository.findByIdForUpdate(listahorario.getHorario().getIdHorario())
-                    .orElseThrow(() -> new EntityNotFoundException("Horario no encontrado"));
+            Horario horario = this.horarioRepository.findByIdForUpdate(listahorario.getHorario().getIdHorario()).orElseThrow(() -> new EntityNotFoundException("Horario no encontrado"));
+
+            /*if (Objects.equals(horario.getLimitePreinscripcion(), horario.getContador() + 1)) {
+                listahorario.setEstado("0");
+                Convocatoria convocatoria = listahorario.getConvocatoria();
+                if (convocatoria != null) {
+                    convocatoria.setEstado("0");
+                    convocatoriaService.save(convocatoria);
+                }
+                listahorarioService.save(listahorario);
+            }*/
 
             if (Objects.equals(horario.getLimitePreinscripcion(), horario.getContador()))
-                throw new InscriptionLimitReachedException(
-                        "No hay cupos disponibles para el horario asignado al participante " +
-                                inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + " " +
-                                inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno() + " " +
-                                inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno() + " "
-                );
+
+                throw new InscriptionLimitReachedException("No hay cupos disponibles para el horario asignado al participante " + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + " " + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno() + " " + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno() + " ");
+
 
             horario.setContador(horario.getContador() + 1);
 
             // Buscar la existencia de una persona incluida en apoderados y participantes, en caso contrario crearlos.
-            Persona personaApoderado = personaService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNumDocumento())
-                    .map(personaApoderadoExistente -> {
-                        personaApoderadoExistente.setNombres(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNombres());
-                        personaApoderadoExistente.setApaterno(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getApaterno());
-                        personaApoderadoExistente.setAmaterno(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getAmaterno());
-                        personaApoderadoExistente.setCorreo(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getCorreo());
-                        personaApoderadoExistente.setTelefono(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTelefono());
-                        personaApoderadoExistente.setDireccion(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getDireccion());
-                        personaApoderadoExistente.setGenero(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getGenero());
-                        personaApoderadoExistente.setFNacimiento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getFNacimiento());
-                        personaApoderadoExistente.setUbigeo(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getUbigeo());
-                        return personaApoderadoExistente;
-                    })
-                    .orElseGet(() -> personaService.save(inscripcion.getApoderadoparticipante().getApoderado().getPersona()));
+            Persona personaApoderado = personaService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNumDocumento()).map(personaApoderadoExistente -> {
+                personaApoderadoExistente.setNombres(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNombres());
+                personaApoderadoExistente.setApaterno(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getApaterno());
+                personaApoderadoExistente.setAmaterno(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getAmaterno());
+                personaApoderadoExistente.setCorreo(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getCorreo());
+                personaApoderadoExistente.setTelefono(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTelefono());
+                personaApoderadoExistente.setDireccion(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getDireccion());
+                personaApoderadoExistente.setGenero(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getGenero());
+                personaApoderadoExistente.setFNacimiento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getFNacimiento());
+                personaApoderadoExistente.setUbigeo(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getUbigeo());
+                return personaApoderadoExistente;
+            }).orElseGet(() -> personaService.save(inscripcion.getApoderadoparticipante().getApoderado().getPersona()));
 
-            Apoderado apoderadoFinal = apoderadoService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNumDocumento())
-                    .map(apoderadoExistente -> {
-                        apoderadoExistente.setPersona(personaApoderado);
-                        return apoderadoExistente;
-                    })
-                    .orElseGet(() -> {
-                        inscripcion.getApoderadoparticipante().getApoderado().setPersona(personaApoderado);
-                        return apoderadoService.save(inscripcion.getApoderadoparticipante().getApoderado());
-                    });
+            Apoderado apoderadoFinal = apoderadoService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getApoderado().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getApoderado().getPersona().getNumDocumento()).map(apoderadoExistente -> {
+                apoderadoExistente.setPersona(personaApoderado);
+                return apoderadoExistente;
+            }).orElseGet(() -> {
+                inscripcion.getApoderadoparticipante().getApoderado().setPersona(personaApoderado);
+                return apoderadoService.save(inscripcion.getApoderadoparticipante().getApoderado());
+            });
 
             inscripcion.getApoderadoparticipante().setApoderado(apoderadoFinal);
 
-            Persona personaParticipante = personaService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNumDocumento())
-                    .map(personaPaticipanteExistente -> {
-                        personaPaticipanteExistente.setNombres(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres());
-                        personaPaticipanteExistente.setApaterno(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno());
-                        personaPaticipanteExistente.setAmaterno(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno());
-                        personaPaticipanteExistente.setCorreo(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getCorreo());
-                        personaPaticipanteExistente.setTelefono(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTelefono());
-                        personaPaticipanteExistente.setDireccion(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getDireccion());
-                        personaPaticipanteExistente.setGenero(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getGenero());
-                        personaPaticipanteExistente.setFNacimiento(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getFNacimiento());
-                        personaPaticipanteExistente.setUbigeo(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getUbigeo());
-                        return personaPaticipanteExistente;
-                    })
-                    .orElseGet(() -> personaService.save(inscripcion.getApoderadoparticipante().getParticipante().getPersona()));
+            Persona personaParticipante = personaService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNumDocumento()).map(personaPaticipanteExistente -> {
+                personaPaticipanteExistente.setNombres(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres());
+                personaPaticipanteExistente.setApaterno(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno());
+                personaPaticipanteExistente.setAmaterno(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno());
+                personaPaticipanteExistente.setCorreo(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getCorreo());
+                personaPaticipanteExistente.setTelefono(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTelefono());
+                personaPaticipanteExistente.setDireccion(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getDireccion());
+                personaPaticipanteExistente.setGenero(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getGenero());
+                personaPaticipanteExistente.setFNacimiento(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getFNacimiento());
+                personaPaticipanteExistente.setUbigeo(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getUbigeo());
+                return personaPaticipanteExistente;
+            }).orElseGet(() -> personaService.save(inscripcion.getApoderadoparticipante().getParticipante().getPersona()));
 
-            Participante participanteFinal = participanteService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNumDocumento())
-                    .map(participanteExistente -> {
-                        participanteExistente.setPersona(personaParticipante);
-                        participanteExistente.setPresentaDiscapacidad(inscripcion.getApoderadoparticipante().getParticipante().getPresentaDiscapacidad());
-                        return participanteExistente;
-                    })
-                    .orElseGet(() -> {
-                        inscripcion.getApoderadoparticipante().getParticipante().setPersona(personaParticipante);
-                        return participanteService.save(inscripcion.getApoderadoparticipante().getParticipante());
-                    });
+            Participante participanteFinal = participanteService.findByIdTipoDocumentoAndNumDocumento(inscripcion.getApoderadoparticipante().getParticipante().getPersona().getTipodocumento().getIdTipoDocumento(), inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNumDocumento()).map(participanteExistente -> {
+                participanteExistente.setPersona(personaParticipante);
+                participanteExistente.setPresentaDiscapacidad(inscripcion.getApoderadoparticipante().getParticipante().getPresentaDiscapacidad());
+                return participanteExistente;
+            }).orElseGet(() -> {
+                inscripcion.getApoderadoparticipante().getParticipante().setPersona(personaParticipante);
+                return participanteService.save(inscripcion.getApoderadoparticipante().getParticipante());
+            });
 
             inscripcion.getApoderadoparticipante().setParticipante(participanteFinal);
 
             //  TODO: Validar si el participante ya está inscrito en un horario dentro de la misma temporada.
-            if (this.inscripcionRepository.existeInscripcionActiva(
-                    inscripcion.getApoderadoparticipante().getParticipante().getIdParticipante(),
-                    listahorario.getConvocatoria().getTemporada().getIdTemporada())
-            ) throw new ParticipanteYaInscritoException("El participante" + ' ' +
-                    inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + ' ' +
-                    inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno() + ' ' +
-                    inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno() + ' ' +
-                    "Ya cuenta con una inscripción activa para esta temporada"
-            );
+            if (this.inscripcionRepository.existeInscripcionActiva(inscripcion.getApoderadoparticipante().getParticipante().getIdParticipante(), listahorario.getConvocatoria().getTemporada().getIdTemporada()))
+                throw new ParticipanteYaInscritoException("El participante" + ' ' + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + ' ' + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno() + ' ' + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno() + ' ' + "Ya cuenta con una inscripción activa para esta temporada");
 
-            Apoderadoparticipante apoParFinal = this.apoderadoparticipanteService.findByApoderadoAndParticipante(
-                    inscripcion.getApoderadoparticipante().getApoderado().getIdApoderado(),
-                    inscripcion.getApoderadoparticipante().getParticipante().getIdParticipante()
-            ).map(apParExistente -> {
+            Apoderadoparticipante apoParFinal = this.apoderadoparticipanteService.findByApoderadoAndParticipante(inscripcion.getApoderadoparticipante().getApoderado().getIdApoderado(), inscripcion.getApoderadoparticipante().getParticipante().getIdParticipante()).map(apParExistente -> {
                 apParExistente.setTiporelacion(inscripcion.getApoderadoparticipante().getTiporelacion());
                 return apParExistente;
             }).orElseGet(() -> {
@@ -432,9 +374,7 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
             mail.setTo(email);
             mail.setSubject("PRE-INSCRIPCION ACADEMIA IPD EXITOSA");
 
-            String alumno = inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + ' '
-                    + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno() + ' '
-                    + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno();
+            String alumno = inscripcion.getApoderadoparticipante().getParticipante().getPersona().getNombres() + ' ' + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getApaterno() + ' ' + inscripcion.getApoderadoparticipante().getParticipante().getPersona().getAmaterno();
 
             String disciplina = inscripcion.getListahorario().getHorario().getListadisciplina().getDisciplina().getDescripcion();
             String complejo = inscripcion.getListahorario().getHorario().getListadisciplina().getSede().getNombre();
@@ -481,9 +421,13 @@ public class InscripcionServiceImpl extends CRUDImpl<Inscripcion, Integer> imple
 
     @Override
     public void anularPreinscricpion(Integer idInscripcion) {
-        Inscripcion inscripcion = inscripcionRepository.findById(idInscripcion)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Inscripción no encontrada"));
+        Inscripcion inscripcion = inscripcionRepository.findById(idInscripcion).orElseThrow(() -> new ResourceNotFoundException("Inscripción no encontrada"));
+
+        Horario horario = horarioRepository.findById(inscripcion.getListahorario().getHorario().getIdHorario()).orElseThrow(() -> new ResourceNotFoundException("Horario no encontrado"));
+
+        horario.setContador(horario.getContador() - 1);
+
+        horarioRepository.save(horario);
 
         inscripcion.setEstado("0");
         inscripcionRepository.save(inscripcion);

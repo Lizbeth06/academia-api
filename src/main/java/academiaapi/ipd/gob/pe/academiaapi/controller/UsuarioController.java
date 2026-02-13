@@ -62,6 +62,7 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Obtener usuario por username")
     @GetMapping("/username/{username}")
     public ResponseEntity<UsuarioDTO> findByUsername(@PathVariable("username") String username) {
         Usuario obj=usuarioService.findByUsername(username);

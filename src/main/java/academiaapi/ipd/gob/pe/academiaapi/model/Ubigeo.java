@@ -46,7 +46,7 @@ public class Ubigeo {
     private String ubiLongitud;
 
     @Column(nullable = false)
-    private Integer ubiEstado;
+    private String estado;
 
 
 }

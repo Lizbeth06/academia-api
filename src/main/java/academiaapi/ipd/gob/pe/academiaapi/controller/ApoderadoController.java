@@ -1,5 +1,6 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
+import academiaapi.ipd.gob.pe.academiaapi.common.result.*;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ApoderadoDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ApoderadoparticipanteDTO;
 import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/apoderado")
@@ -43,20 +45,22 @@ public class ApoderadoController {
 
     @Operation(summary = "Lista un apoderato por tipo de documento y numero de documento")
     @GetMapping("/documento")
-    public ResponseEntity<ApoderadoDTO> findByDocumento(
+    public ResponseEntity<IResult> findByDocumento(
         @RequestParam(required = true) Integer idTipodocumento,
         @RequestParam(required = true) String numDocumento
     ) {
-        Apoderado obj = apoderadoService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("APODERADO NO ENCONTRADO"));;
-        return ResponseEntity.ok(mapperUtil.map(obj, ApoderadoDTO.class));
-    }
+        Optional<Apoderado> optionalApoderado =
+                apoderadoService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento);
 
-//    @Operation(summary = "Obtener la relación entre un apoderado y un participante")
-//    @GetMapping("/{idApoderado}/participante/{idParticipante}")
-//    public ResponseEntity<ApoderadoparticipanteDTO> findRelacionParticipante(@PathVariable("idApoderado") Integer idApoderado, @PathVariable("idParticipante") Integer idParticipante) {
-//        Apoderadoparticipante obj = apoderadoparticipanteService.findByApoderadoAndParticipante(idApoderado, idParticipante).orElseThrow(()->new ModelNotFoundException("RELACIÓN NO ENCONTRADO"));;
-//        return ResponseEntity.ok(mapperUtil.map(obj, ApoderadoparticipanteDTO.class));
-//    }
+        return optionalApoderado
+                .<ResponseEntity<IResult>>map(apoderado -> {
+                    ApoderadoDTO dto = mapperUtil.map(apoderado, ApoderadoDTO.class);
+                    return ResponseEntity.ok(new SuccessResult<>(dto)); // HTTP 200
+                })
+                .orElseGet(() -> ResponseEntity
+                        .status(404)
+                        .body(new FailureResult<>(404, new DetailError("06", "No se encontro el apoderado"))));
+    }
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody ApoderadoDTO dto) {

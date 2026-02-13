@@ -1,7 +1,13 @@
 package academiaapi.ipd.gob.pe.academiaapi.controller;
 
+import academiaapi.ipd.gob.pe.academiaapi.common.result.DetailError;
+import academiaapi.ipd.gob.pe.academiaapi.common.result.FailureResult;
+import academiaapi.ipd.gob.pe.academiaapi.common.result.IResult;
+import academiaapi.ipd.gob.pe.academiaapi.common.result.SuccessResult;
+import academiaapi.ipd.gob.pe.academiaapi.dto.ApoderadoDTO;
 import academiaapi.ipd.gob.pe.academiaapi.dto.ParticipanteDTO;
 import academiaapi.ipd.gob.pe.academiaapi.exception.ModelNotFoundException;
+import academiaapi.ipd.gob.pe.academiaapi.model.Apoderado;
 import academiaapi.ipd.gob.pe.academiaapi.model.Participante;
 import academiaapi.ipd.gob.pe.academiaapi.service.IParticipanteService;
 import academiaapi.ipd.gob.pe.academiaapi.util.MapperUtil;
@@ -16,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/participante")
@@ -39,12 +46,21 @@ public class ParticipanteController {
 
     @Operation(summary = "Lista un participante por tipo de documento y numero de documento")
     @GetMapping("/documento")
-    public ResponseEntity<ParticipanteDTO> findByIdDocumento(
+    public ResponseEntity<IResult> findByIdDocumento(
             @RequestParam(required = true) Integer idTipodocumento,
             @RequestParam(required = true) String numDocumento
     ) {
-        Participante obj = participanteService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento).orElseThrow(()->new ModelNotFoundException("PARTICIPANTE NO ENCONTRADO"));;
-        return ResponseEntity.ok(mapperUtil.map(obj, ParticipanteDTO.class));
+
+        Optional<Participante> optionalParticipante = participanteService.findByIdTipoDocumentoAndNumDocumento(idTipodocumento, numDocumento);
+
+        return optionalParticipante
+                .<ResponseEntity<IResult>>map(participante -> {
+                    ParticipanteDTO dto = mapperUtil.map(participante, ParticipanteDTO.class);
+                    return ResponseEntity.ok(new SuccessResult<>(dto)); // HTTP 200
+                })
+                .orElseGet(() -> ResponseEntity
+                        .status(404)
+                        .body(new FailureResult<>(404, new DetailError("06", "No se encontro a la persona"))));
     }
 
     @PostMapping

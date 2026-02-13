@@ -33,9 +33,6 @@ public class PersonaDTO {
     @NotNull
     private String amaterno;
 
-    @NotNull
-    private String genero;
-
 //    @NotNull
     private String correo;
 
@@ -52,6 +49,8 @@ public class PersonaDTO {
     private String urlFoto;
 
     private TipodocumentoDTO tipodocumento;
+
+    private GeneroDTO genero;
 
     private UbigeoDTO ubigeo;
 }

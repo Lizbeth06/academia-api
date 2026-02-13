@@ -67,7 +67,10 @@ public class DisciplinaController {
     @Operation(summary = "Elimina una disciplina")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        disciplinaService.delete(id);
+        Disciplina disciplina=disciplinaService.findById(id);
+        disciplina.setEstado("0");
+        disciplinaService.save(disciplina);
+
         return ResponseEntity.noContent().build();
     }
 }

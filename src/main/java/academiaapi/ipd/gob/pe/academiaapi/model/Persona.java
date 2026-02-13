@@ -45,9 +45,6 @@ public class Persona {
     private String amaterno;
 
     @Column(nullable = false)
-    private String genero;
-
-//    @Column(nullable = false)
     private String correo;
 
     private String telefono;
@@ -60,6 +57,10 @@ public class Persona {
     @Column(nullable = true, length = 10000)  // Esto define el tamaño máximo en la base de datos
     @Size(max = 10000, message = "La descripción no puede tener más de 1000 caracteres")
     private String urlFoto;
+
+    @ManyToOne
+    @JoinColumn(name = "id_genero",foreignKey = @ForeignKey(name = "FK_PERSONA_GENERO"))
+    private Genero genero;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_documento",foreignKey = @ForeignKey(name = "FK_PERSONA_TIPODOCUMENTO"))
